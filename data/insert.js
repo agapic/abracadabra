@@ -13,12 +13,12 @@ var region = 'na'
 function insert(){
 for(i = 0; i < 1; i++){
 
-    var file = require('./5.14/NORMAL_5X5/'+region+'/'+1+'.json'); //yes, this is hardcoded as it isn't really a problem given the requirements
+    var file = require('./5.14/RANKED_SOLO/'+region+'/'+1+'.json'); //yes, this is hardcoded as it isn't really a problem given the requirements
 
     for(j = 0; j < file.participants.length; j++){
         try{
         var queryConfig = {
-            text: 'INSERT INTO match(champName, region, matchType, item0, item1, item2, item3, item4, item5, matchVersion, magicDamageDealtToChampions, highestAchievedSeasonTier, lane) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13);',
+            text: 'INSERT INTO match(champName, region, matchType, item0, item1, item2, item3, item4, item5, matchVersion, magicDamageDealtToChampions, highestAchievedSeasonTier, lane, winner) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14);',
             values: [
                 champNames.convert(file.participants[j].championId),
                 file.region,
@@ -32,7 +32,8 @@ for(i = 0; i < 1; i++){
                 file.matchVersion.substring(0,4), 
                 file.participants[j].stats.magicDamageDealtToChampions,
                 file.participants[j].highestAchievedSeasonTier,
-                file.participants[j].timeline.lane
+                file.participants[j].timeline.lane,
+                file.participants[j].stats.winner
                 ]
             }
          

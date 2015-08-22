@@ -21,6 +21,7 @@ var query = client.query('CREATE TABLE IF NOT EXISTS match(id SERIAL,\
                                        matchVersion TEXT,\
                                        magicDamageDealtToChampions INTEGER,\
                                        highestAchievedSeasonTier TEXT,\
-                                       lane TEXT)');
+                                       lane TEXT,\
+                                       winner BOOLEAN)');
 query.on('end', function() { client.end(); });
 

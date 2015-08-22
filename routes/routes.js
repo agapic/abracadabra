@@ -7,7 +7,6 @@ exports.index = function(req, res){
 exports.data = function(req, res){
 
     core.queryAll(function(data) { 
-        console.log(data[0]);
         res.render('data', {dataLump: data});
     })
 

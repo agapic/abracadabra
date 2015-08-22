@@ -23,7 +23,6 @@ module.exports = {
         "7":"Leblanc",
         "30":"Karthus",
         "32":"Amumu",
-        "5":"XinZhao",
         "31":"Chogath",
         "4":"TwistedFate",
         "9":"FiddleSticks",
@@ -37,12 +36,8 @@ module.exports = {
         "105":"Fizz",
         "103":"Ahri",
         "99":"Lux",
-        "102":"Shyvana",
         "101":"Xerath",
-        "412":"Thresh",
-        "98":"Shen",
         "96":"KogMaw",
-        "223":"TahmKench",
         "90":"Malzahar",
         "10":"Kayle",
         "89":"Leona",
@@ -50,14 +45,12 @@ module.exports = {
         "117":"Lulu",
         "78":"Poppy",
         "115":"Ziggs",
-        "77":"Udyr",
         "112":"Viktor",
         "113":"Sejuani",
         "111":"Nautilus",
         "432":"Bard",
         "245":"Ekko",
         "82":"Mordekaiser",
-        "83":"Yorick",
         "81":"Ezreal",
         "84":"Akali",
         "85":"Kennen",
@@ -84,6 +77,13 @@ module.exports = {
         "54":"Malphite",
         "50":"Swain"
     }
+        if(number === "inject"){
+            return Object.keys(champs).length;       
+        }
+        
+        if(number === "champList"){
+            return champs;
+        }
        
         if(!champs[number]){
             throw error;
@@ -92,5 +92,7 @@ module.exports = {
     return champs[number];
         }
     }
+    
+    
 };
 
