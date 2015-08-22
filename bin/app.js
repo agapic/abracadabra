@@ -17,19 +17,20 @@ app.engine('html', hbs.__express);
 var champLength = champs.convert("inject")
 var champList = champs.convert("champList")
 var i = 0;
-for(i = 1; i < 32; i++){
+for(i = 31; i < 32; i++){
     if(!champList[i]){
         continue;
-    }   
+    }   console.log("this");
     var temp = champList[i];
    core.queryByChamp(temp, function(data) {
        if(!data.sum){
            return;
        }
+       console.log("is");
  fs.writeFile('../stats/magicDamageBefore.json',champList[i] + ": " + data.sum);
        
    })
-    
+    console.log("sparta");
 }
     
     
@@ -48,7 +49,7 @@ app.get('/data', routes.data);
         
 //Listen to dat port
 app.listen(3002, function(){
-    console.log("listening");
+    //console.log("listening");
 });
 
 

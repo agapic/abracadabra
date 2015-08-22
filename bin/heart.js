@@ -20,14 +20,11 @@ self.queryAll = function (callback) {
 }
 
 
-self.queryByChamp = function (champName) {
+self.queryByChamp = function (champName, callback) {
 
     var query = client.query('select SUM(magicdamagedealttochampions) from match where \''+champName+'\' IN (champname) AND matchversion=\'5.14\'', function(err, result){
-        if(!result){
-            return;
-        }
+
         callback(result.rows[0]);
-        console.log("CHAMPS: " + champName);
     })
     query.on('end', client.end.bind(client));
 
