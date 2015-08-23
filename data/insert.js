@@ -7,6 +7,9 @@ var connectionString = fileConnector.connection;
 var client = new pg.Client(connectionString);
 client.connect();
 
+
+
+
 var region = 'na'
 
 

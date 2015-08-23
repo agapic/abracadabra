@@ -7,41 +7,57 @@ var routes = require('../routes/routes');
 var champs = require('../data/champNames');
 var fs = require('fs');
 
+
+var regions = ['BR','EUNE','EUW','KR','LAN','LAS','NA','OCE','RU','TR'];  
+region = regions[0];
+
 //config
 
 app.set('views', path.join(__dirname, '../views'));
-app.set('view engine','html');
-app.engine('html', hbs.__express);
+app.set('view engine','hbs');
 
 
-var champLength = champs.convert("inject")
-var champList = champs.convert("champList")
-var i = 0;
-for(i = 31; i < 32; i++){
-    if(!champList[i]){
-        continue;
-    }   console.log("this");
-    var temp = champList[i];
-   core.queryByChamp(temp, function(data) {
-       if(!data.sum){
-           return;
-       }
-       console.log("is");
- fs.writeFile('../stats/magicDamageBefore.json',champList[i] + ": " + data.sum);
-       
+
+function createMagicDamageBeforeFile(){
+   core.queryMagicDamage("magicDamageBefore", function(data) {
+        fs.writeFile('./stats/getMagicBefore.json', JSON.stringify(data));
    })
-    console.log("sparta");
-}
-    
-    
-hbs.registerHelper('each_when', function(list, k, v, opts) {
 
-    var i, result = '';
-    for(i = 0; i < list.length; ++i)
-        if(list[i][k] == v)
-            result = result + opts.fn(list[i]);
-    return result;
-});
+}1
+
+function createMagicDamageAfterFile(){
+   core.queryMagicDamage("magicDamageAfter", function(data) {
+        fs.writeFile('./stats/getMagicAfter.json', JSON.stringify(data));
+   })
+
+}
+/*
+function createMagicDamageBeforeFileBR(){
+   core.queryMagicDamage("magicDamageBefore"+region, function(data) {
+        fs.writeFile('./stats/getMagicBefore'+region+'.json', JSON.stringify(data));
+   })
+}
+
+
+//AFTER
+
+function createMagicDamageAfterFileBR(){
+   core.queryMagicDamage("magicDamageAfter"+region, function(data) {
+        fs.writeFile('./stats/getMagicAfter'+region+'.json', JSON.stringify(data));
+   })
+}
+*/
+
+            
+
+//createMagicDamageAfterFileBR();
+//createMagicDamageBeforeFile();
+//createMagicDamageAfterFile();
+
+
+   
+
+
 
 //Routes
 app.get('/', routes.index);
@@ -51,8 +67,3 @@ app.get('/data', routes.data);
 app.listen(3002, function(){
     //console.log("listening");
 });
-
-
-
-
-   
