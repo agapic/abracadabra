@@ -47,14 +47,14 @@ self.queryMagicDamage = function (context, callback) {
     }
     
                 if(context==="magicDamageBeforeEUNE"){
-    var query = client.query('select champname,region, SUM(magicdamagedealttochampions) FROM match WHERE matchversion=\'5.11\' AND region=\'EUNE\' GROUP BY champname,region ORDER BY champname ASC;', function(err, result){
+    var query = client.query('select champname,region, SUM(magicdamagedealttochampions) FROM match WHERE matchversion=\'5.11\' AND region=\'EUNE\' GROUP BY champname,region ORDER BY champname ASC', function(err, result){
         console.log("EUNE: " + result.rows);
             callback(result.rows);
     })
     }
     
                 if(context==="magicDamageBeforeEUW"){
-    var query = client.query('select champname,region, SUM(magicdamagedealttochampions) FROM match WHERE region=\'EUW\' AND matchversion=\'5.11\' GROUP BY champname,region ORDER BY champname ASC;', function(err, result){
+    var query = client.query('select champname,region, SUM(magicdamagedealttochampions) FROM match WHERE region=\'EUW\' AND matchversion=\'5.11\' GROUP BY champname,region ORDER BY champname ASC', function(err, result){
         console.log(query.text);
         console.log("EUW: " + result.rows);
             callback(result.rows);

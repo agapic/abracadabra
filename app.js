@@ -1,10 +1,10 @@
-var core = require('./heart.js');
+var core = require('./bin/heart.js');
 var express = require('express');
 var app = express();
 var path = require('path');
 var hbs = require('hbs');
-var routes = require('../routes/routes');
-var champs = require('../data/champNames');
+var routes = require('./routes/routes');
+var champs = require('./data/champNames');
 var fs = require('fs');
 
 
@@ -12,22 +12,24 @@ var regions = ['BR','EUNE','EUW','KR','LAN','LAS','NA','OCE','RU','TR'];
 region = regions[0];
 
 //config
-
-app.set('views', path.join(__dirname, '../views'));
 app.set('view engine','hbs');
+app.set('views', path.join(__dirname, '/views'));
+
+
+app.use(express.static(__dirname + '/public'));
 
 
 
 function createMagicDamageBeforeFile(){
    core.queryMagicDamage("magicDamageBefore", function(data) {
-        fs.writeFile('./stats/getMagicBefore.json', JSON.stringify(data));
+        fs.writeFile('./bin/stats/getMagicBefore.json', JSON.stringify(data));
    })
 
 }1
 
 function createMagicDamageAfterFile(){
    core.queryMagicDamage("magicDamageAfter", function(data) {
-        fs.writeFile('./stats/getMagicAfter.json', JSON.stringify(data));
+        fs.writeFile('./bin/stats/getMagicAfter.json', JSON.stringify(data));
    })
 
 }
@@ -61,7 +63,8 @@ function createMagicDamageAfterFileBR(){
 
 //Routes
 app.get('/', routes.index);
-app.get('/data', routes.data);
+app.get('/totalDamage', routes.totalDamage);
+app.get('/magicDamage:region', routes.magicDamage);
         
 //Listen to dat port
 app.listen(3002, function(){
