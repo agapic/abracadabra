@@ -1,35 +1,16 @@
+
+
 <!doctype html>
 <html><head>
-<link rel='stylesheet' href='/css/styles.css'>
-<link rel='stylesheet' href='/css/semantic.css'>
-{{{block "stylesheets"}}}
+{{{block "scripts"}}}{{{block "stylesheets"}}}
     </head>
-<body>
-
-
-
-<table class = "ui striped table">
-    <thead><tr><th>Champion Name</th><th>Magic Damage Before</th><th>Magic Damage After</th><th>Difference</th></tr></thead>
-    <tbody>
-
-        {{#each champDamageData}}
+<body>{{> damages}}
+<script>
+$('.ui.dropdown')
+    .dropdown();
         
-        <tr>
-            <td> {{champname}}</td> 
-            <td> {{sum}}</td>
-            <td>{{afterSum}}</td>
-            <td>{{difference}}%</td>
-        </tr>
-        
-        {{/each}} 
-
-    </tbody></table>
-        
-        
-
-    </div>
-
-
- </div>
-  
-     
+        $("#datatable").load("/damage #datatable table")
+    </script>
+    
+ 
+</body></html>

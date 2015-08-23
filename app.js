@@ -14,7 +14,7 @@ region = regions[0];
 //config
 app.set('view engine','hbs');
 app.set('views', path.join(__dirname, '/views'));
-
+app.set('view options', {layout: 'layout'});
 
 app.use(express.static(__dirname + '/public'));
 
@@ -63,8 +63,8 @@ function createMagicDamageAfterFileBR(){
 
 //Routes
 app.get('/', routes.index);
-app.get('/totalDamage', routes.totalDamage);
-app.get('/magicDamage:region', routes.magicDamage);
+app.get('/damage', routes.damage);
+app.get('/damage/:region', routes.damage);
         
 //Listen to dat port
 app.listen(3002, function(){

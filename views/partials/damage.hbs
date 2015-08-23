@@ -1,0 +1,43 @@
+
+<div class="ui floating dropdown labeled search icon button">
+  <i class="world icon"></i>
+  <span class="text">Select Language</span>
+  <div class="menu">
+    <div class="item"><a href="#" id="br">Brazil</a></div>
+    <div class="item"><a href="/damage/eune">Europe Northeast</a></div>
+    <div class="item"><a href="/damage/euw">Europe West</a></div>
+      <div class="item"><a href="/damage/kr">Korea</a></div>
+    <div class="item"><a href="/damage/lan">Latin America North</a></div>
+    <div class="item"><a href="/damage/las">Latin America South</a></div>
+      <div class="item"><a href="/damage/na">North America</a></div>
+      <div class="item"><a href="/damage/oce">Oceanic</a></div>
+      <div class="item"><a href="/damage/ru">Russia</a></div>
+      <div class="item"><a href="/damage/tr">Turkey</a></div>
+  </div>
+</div>
+<div id="datatable">
+<table class = "ui striped table">
+    <thead><tr><th>Champion dfgName</th><th>Magic Damage Before</th><th>Magic Damage After</th><th>Difference</th></tr></thead>
+    <tbody>
+
+        {{#each champDamageData}}
+        
+        <tr>
+            <td> {{champname}}</td> 
+            <td> {{sum}}</td>
+            <td>{{afterSum}}</td>
+            <td>{{difference}}%</td>
+        </tr>
+        
+        {{/each}} 
+
+    </tbody></table>
+        
+        
+
+    </div>
+  
+
+
+
+     
