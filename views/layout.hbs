@@ -2,15 +2,8 @@
 
 <!doctype html>
 <html><head>
-{{{block "scripts"}}}{{{block "stylesheets"}}}
+{{>header}}
     </head>
-<body>{{> damages}}
-<script>
-$('.ui.dropdown')
-    .dropdown();
-        
-        $("#datatable").load("/damage #datatable table")
-    </script>
+<body>{{>damageData}}
     
- 
-</body></html>
+    </body></html>

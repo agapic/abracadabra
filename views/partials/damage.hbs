@@ -1,23 +1,27 @@
 
-<div class="ui floating dropdown labeled search icon button">
-  <i class="world icon"></i>
-  <span class="text">Select Language</span>
-  <div class="menu">
-    <div class="item"><a href="#" id="br">Brazil</a></div>
-    <div class="item"><a href="/damage/eune">Europe Northeast</a></div>
-    <div class="item"><a href="/damage/euw">Europe West</a></div>
-      <div class="item"><a href="/damage/kr">Korea</a></div>
-    <div class="item"><a href="/damage/lan">Latin America North</a></div>
-    <div class="item"><a href="/damage/las">Latin America South</a></div>
-      <div class="item"><a href="/damage/na">North America</a></div>
-      <div class="item"><a href="/damage/oce">Oceanic</a></div>
-      <div class="item"><a href="/damage/ru">Russia</a></div>
-      <div class="item"><a href="/damage/tr">Turkey</a></div>
-  </div>
-</div>
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Region
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a href="/damage/br">Brazil</a></li>
+    <li><a href="/damage/eune">Europe Northeast</a></li>
+    <li><a href="/damage/euw">Europe West</a></li>
+     <li><a href="/damage/kr">Korea</a></li>
+    <li><a href="/damage/lan">Latin America North</a></li>
+    <li><a href="/damage/las">Latin America South</a></li>
+      <li><a href="/damage/na">North America</a></li>
+      <li><a href="/damage/oce">Oceanic</a></li>
+      <li><a href="/damage/ru">Russia</a></li>
+      <li><a href="/damage/tr">Turkey</a></li>
+      <li role="separator" class="divider"></li>
+      <li><li><a href="/damage/">Overall</a></li></li>
+    </ul>
+</div>    
 <div id="datatable">
 <table class = "ui striped table">
-    <thead><tr><th>Champion dfgName</th><th>Magic Damage Before</th><th>Magic Damage After</th><th>Difference</th></tr></thead>
+    <thead><tr><th>Champion Name</th><th>Magic Damage Before</th><th>Magic Damage After</th><th>Difference</th></tr></thead>
     <tbody>
 
         {{#each champDamageData}}
@@ -36,8 +40,15 @@
         
 
     </div>
-  
 
+<script>
+$('.ui.dropdown')
+    .dropdown();
+
+        if(window.location.pathname == "/damage/"){
+       $("#datatable").load("/damage #datatable table")
+        }
+</script>
 
 
      
