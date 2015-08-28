@@ -6,10 +6,11 @@ var hbs = require('hbs');
 var routes = require('./routes/routes');
 var champs = require('./data/champNames');
 var fs = require('fs');
+var async = require('async');
 
 
 var regions = ['BR','EUNE','EUW','KR','LAN','LAS','NA','OCE','RU','TR'];  
-region = regions[0];
+//region = regions[0];
 
 //config
 app.set('view engine','hbs');
@@ -19,13 +20,25 @@ app.set('view options', {layout: 'layout'});
 app.use(express.static(__dirname + '/public'));
 
 
+function queryAllBefore(){
+   core.queryAllBefore(function(data) {
+        fs.writeFile('./bin/stats/beforeAggregate.json', JSON.stringify(data));
+   })
+}
+
+function queryAllAfter(){
+   core.queryAllAfter(function(data) {
+        fs.writeFile('./bin/stats/afterAggregate.json', JSON.stringify(data));
+   })
+}
+
 
 function createMagicDamageBeforeFile(){
    core.queryMagicDamage("magicDamageBefore", function(data) {
         fs.writeFile('./bin/stats/getMagicBefore.json', JSON.stringify(data));
    })
 
-}1
+}
 
 function createMagicDamageAfterFile(){
    core.queryMagicDamage("magicDamageAfter", function(data) {
@@ -33,31 +46,51 @@ function createMagicDamageAfterFile(){
    })
 
 }
-/*
-function createMagicDamageBeforeFileBR(){
+
+function createMagicDamageBeforeFileBR(region){
    core.queryMagicDamage("magicDamageBefore"+region, function(data) {
-        fs.writeFile('./stats/getMagicBefore'+region+'.json', JSON.stringify(data));
+        fs.writeFile('./bin/stats/getMagicBefore'+region+'.json', JSON.stringify(data));
    })
 }
 
 
 //AFTER
 
-function createMagicDamageAfterFileBR(){
-   core.queryMagicDamage("magicDamageAfter"+region, function(data) {
-        fs.writeFile('./stats/getMagicAfter'+region+'.json', JSON.stringify(data));
+function createMagicDamageAfterFile(region){
+   core.queryMagicDamage(region, "damageByRegionAfter", function(data) {
+       console.log("CALLBACK :" + data);
+        fs.writeFile('./bin/stats/getMagicAfter'+region+'.json', JSON.stringify(data));
    })
 }
-*/
 
-            
+async.series([
+    function(callback){
+        callback(null, queryAllBefore());
+    },
+        function(callback){
+        callback(null, queryAllAfter());
+    },
+    function(callback){
+        callback(null, getItemDataBefore());
+    }
+    ],
+        function(err, results){
+    console.log(results);
+})
 
-//createMagicDamageAfterFileBR();
-//createMagicDamageBeforeFile();
-//createMagicDamageAfterFile();
+function getMagicDamageByAllRegions(){            
+for(i = 0; i < 1; i++){
+    createMagicDamageBeforeFile(regions[i])
+    createMagicDamageAfterFile(regions[i])
+}
+}
 
+function getItemDataBefore(){
+ 
+    
 
-   
+    
+
 
 
 
@@ -70,3 +103,5 @@ app.get('/damage/:region', routes.damage);
 app.listen(3002, function(){
     //console.log("listening");
 });
+    
+    

@@ -23,21 +23,27 @@ exports.damage = function(req, res){
     else{
         regions='';
     }
-    fileBefore = require('../bin/stats/getMagicBefore'+regions+'.json');
-    fileAfter = require('../bin/stats/getMagicAfter'+regions+'.json');
+    magicBefore = require('../bin/stats/getMagicBefore'+regions+'.json');
+    magicAfter = require('../bin/stats/getMagicAfter'+regions+'.json');
+
     
-    var champDataLength = fileBefore.length;
-    if(fileBefore.length > fileAfter.length){
-        champDataLength = fileAfter.length;
+    var champDataLength = magicBefore.length;
+    if(magicBefore.length > magicAfter.length){
+        champDataLength = magicAfter.length;
     }
 
+        
+    
     var champDamageData = [];
     for(i = 0; i < champDataLength; i++) {
-        var elementNum = fileBefore[i];
-        elementNum["afterSum"] = fileAfter[i].sum;   
-        elementNum["difference"] = parseFloat(((fileAfter[i].sum - fileBefore[i].sum) / fileBefore[i].sum)*100).toFixed(2);
-        champDamageData.push(fileBefore[i]);      
+        var elementNum = magicBefore[i];
+        elementNum["afterSum"] = magicAfter[i].sum;   
+        elementNum["difference"] = parseFloat(((magicAfter[i].sum - magicBefore[i].sum) / magicBefore[i].sum)*100).toFixed(2);
+        champDamageData.push(magicBefore[i]);      
     }
+    
+ 
+    
     res.locals = {champDamageData: champDamageData}
     res.render('partials/damage');
 }
