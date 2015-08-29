@@ -25,6 +25,9 @@ exports.damage = function(req, res){
     }
     magicBefore = require('../bin/stats/getMagicBefore'+regions+'.json');
     magicAfter = require('../bin/stats/getMagicAfter'+regions+'.json');
+    gamesBefore = require('../bin/stats/getChampGamesBefore'+regions+'.json');
+    gamesAfter = require('../bin/stats/getChampGamesAfter'+regions+'.json');
+    
 
     
     var champDataLength = magicBefore.length;
@@ -37,8 +40,17 @@ exports.damage = function(req, res){
     var champDamageData = [];
     for(i = 0; i < champDataLength; i++) {
         var elementNum = magicBefore[i];
-        elementNum["afterSum"] = magicAfter[i].sum;   
-        elementNum["difference"] = parseFloat(((magicAfter[i].sum - magicBefore[i].sum) / magicBefore[i].sum)*100).toFixed(2);
+        elementNum["afterSum"] = magicAfter[i].sum;
+
+        elementNum["gamesBefore"] = gamesBefore[i].count;
+                if(magicAfter[i].champname == gamesAfter[i].champname){
+        elementNum["gamesAfter"] = gamesAfter[i].count;
+                }
+        elementNum["damageDifference"] = parseFloat(((magicAfter[i].sum - magicBefore[i].sum) / magicBefore[i].sum)*100).toFixed(2);
+        
+        elementNum["damagePerGameBefore"] = parseFloat(elementNum["sum"] / elementNum["gamesBefore"]).toFixed(0);
+        elementNum["damagePerGameAfter"] = parseFloat(elementNum["afterSum"] / elementNum["gamesAfter"]).toFixed(0);
+        
         champDamageData.push(magicBefore[i]);      
     }
     

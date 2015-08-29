@@ -3,7 +3,7 @@ var express = require('express');
 var deasync = require('deasync');
 var app = express()
 
-var region = 'tr'
+var region = 'euw'
 
 var fs = require('fs');
 

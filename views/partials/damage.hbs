@@ -21,7 +21,7 @@
 </div>    
 <div id="datatable">
 <table class = "ui striped table">
-    <thead><tr><th>Champion Name</th><th>Patch 5.11 Magic Damage</th><th>Patch 5.14 Magic Damage</th><th>Magic Damage Difference</th><th>Patch 5.11 Winrate</th><th>Patch 5.14 Winrate</th><th>Winrate Difference</th></tr></thead>
+    <thead><tr><th>Champion Name</th><th>Patch 5.11 Magic Damage</th><th>Patch 5.14 Magic Damage</th><th>Magic Damage Difference</th><th>Damage per game Before</th><th>Damage per game Before</th><th>Patch 5.11 Winrate</th><th>Patch 5.14 Winrate</th><th>Winrate Difference</th></tr></thead>
     <tbody>
 
         {{#each champDamageData}}
@@ -31,10 +31,12 @@
             <td> {{sum}}</td>
             <td>{{afterSum}}</td>
             <td>{{damageDifference}}%</td>
+            <td>{{damagePerGameBefore}} ({{gamesBefore}} game(s))</td>
+            <td>{{damagePerGameAfter}} ({{gamesAfter}} game(s))</td>
             <!--
             <td> {{beforeWinRate}}</td>
             <td>{{afterWinRate}}</td>
-            <td> {{winRateDifference}}%</td>
+<td> {{winRateDifference}}%</td>
             -->
         </tr>
         
