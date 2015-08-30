@@ -7,30 +7,29 @@ var routes = require('./routes/routes');
 var champs = require('./data/champNames');
 var fs = require('fs');
 var async = require('async');
-var deasync = require('deasync')
+var deasync = require('deasync');
 var pg = require('pg');
 var fileConnector = require('./data/connection.js');
 var connectionString = fileConnector.connection;
 var client = new pg.Client(connectionString);
 client.connect();
 
-var regions = ['BR','EUNE','EUW','KR','LAN','LAS','NA','OCE','RU','TR'];  
+var regions = ['BR', 'EUNE', 'EUW', 'KR', 'LAN', 'LAS', 'NA', 'OCE', 'RU', 'TR'];
 //region = regions[0];
 
 //config
-app.set('view engine','hbs');
+app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, '/views'));
 app.set('view options', {layout: 'layout'});
 
 app.use(express.static(__dirname + '/public'));
 
 
-function queryAllBefore(){
+function queryAllBefore() {
    core.queryAllBefore(function(data) {
         fs.writeFileSync('./bin/stats/beforeAggregate.json', JSON.stringify(data));
        return;
    })
-
 }
 
 function queryAllAfter(){
@@ -192,6 +191,7 @@ async.series([
 //Routes
 app.get('/', routes.index);
 app.get('/damage', routes.damage);
+app.get('/damageHome', routes.damageHome);
 app.get('/damage/:region', routes.damage);
         
 //Listen to dat port

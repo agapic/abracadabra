@@ -7,13 +7,17 @@ var ejs = require('ejs');
 
 
 hbs.registerPartial('header', fs.readFileSync('./views/partials/header.hbs', 'utf8'));
+
 hbs.registerPartial('damageData', fs.readFileSync('./views/partials/damage.hbs', 'utf8'));
 hbs.registerPartials(__dirname + '../views/partials/');
-var blocks = {};
 
 
 exports.index = function(req, res){
     res.render('layout');
+}
+
+exports.damageHome = function(req, res){
+    res.render('damageHome', {layout: 'damageHome.hbs'});
 }
 
 exports.damage = function(req, res){
