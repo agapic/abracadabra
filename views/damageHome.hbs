@@ -6,4 +6,12 @@
     </head>
 <body>{{>damageData}}
     </body>
+    <script>
+$('.ui.dropdown')
+    .dropdown();
+
+        if(window.location.pathname == "/damageHome/damage/"){
+       $("#datatable").load("/damage #datatable table")
+        }
+</script>
 </html>

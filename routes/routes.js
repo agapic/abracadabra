@@ -17,7 +17,7 @@ exports.index = function(req, res){
 }
 
 exports.damageHome = function(req, res){
-    res.render('damageHome', {layout: 'damageHome.hbs'});
+    res.render('damageHome', {layout: 'damageHome'});
 }
 
 exports.damage = function(req, res){
@@ -61,7 +61,7 @@ exports.damage = function(req, res){
  
     
     res.locals = {champDamageData: champDamageData}
-    res.render('partials/damage');
+    res.render('partials/damage', {layout: 'damageHome'});
 }
 
     

@@ -94,6 +94,21 @@ function createChampGamesAfterFile(){
     });
 }
 
+function createChampGamesBeforeFile(region){
+      var query = client.query('select champname,count(champname) from match where matchversion = \'5.11\' AND region IN ($1) group by champname order by champname asc', [region], function(err, result){
+
+         fs.writeFileSync('./bin/stats/getChampGamesBefore'+region+'.json', JSON.stringify(result.rows));
+        
+    });
+}
+
+function createChampGamesAfterFile(region){
+      var query = client.query('select champname,count(champname) from match where matchversion = \'5.14\' AND region IN ($1) group by champname order by champname asc', [region], function(err, result){
+
+         fs.writeFileSync('./bin/stats/getChampGamesAfter'+region+'.json', JSON.stringify(result.rows));
+        
+    });
+}
 
 async.series([
     
@@ -174,6 +189,50 @@ async.series([
     },
     function(callback){     
         callback(null, createChampGamesAfterFile());
+    },
+    function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[0]));
+    },function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[1]));
+    },    function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[2]));
+    },    function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[3]));
+    },    function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[4]));
+    },    function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[5]));
+    },    function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[6]));
+    },    function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[7]));
+    },    function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[8]));
+    },    function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[9]));
+    }, function(callback){     
+        callback(null, createChampGamesBeforeFile(regions[0]));
+    },
+        function(callback){     
+        callback(null, createChampGamesAfterFile(regions[0]));
+    },    function(callback){     
+        callback(null, createChampGamesAfterFile(regions[1]));
+    },    function(callback){     
+        callback(null, createChampGamesAfterFile(regions[2]));
+    },    function(callback){     
+        callback(null, createChampGamesAfterFile(regions[3]));
+    },    function(callback){     
+        callback(null, createChampGamesAfterFile(regions[4]));
+    },    function(callback){     
+        callback(null, createChampGamesAfterFile(regions[5]));
+    },    function(callback){     
+        callback(null, createChampGamesAfterFile(regions[6]));
+    },    function(callback){     
+        callback(null, createChampGamesAfterFile(regions[7]));
+    },    function(callback){     
+        callback(null, createChampGamesAfterFile(regions[8]));
+    },    function(callback){     
+        callback(null, createChampGamesAfterFile(regions[9]));
     }
     
     
@@ -190,9 +249,9 @@ async.series([
     
 //Routes
 app.get('/', routes.index);
-app.get('/damage', routes.damage);
+app.get('/damageHome/damage', routes.damage);
 app.get('/damageHome', routes.damageHome);
-app.get('/damage/:region', routes.damage);
+app.get('/damageHome/damage/:region', routes.damage);
         
 //Listen to dat port
 app.listen(3002, function(){
