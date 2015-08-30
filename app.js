@@ -21,6 +21,7 @@ var regions = ['BR', 'EUNE', 'EUW', 'KR', 'LAN', 'LAS', 'NA', 'OCE', 'RU', 'TR']
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, '/views'));
 app.set('view options', {layout: 'layout'});
+app.set('port', (process.env.PORT || 5000))
 
 app.use(express.static(__dirname + '/public'));
 
@@ -254,8 +255,8 @@ app.get('/damageHome', routes.damageHome);
 app.get('/damageHome/damage/:region', routes.damage);
         
 //Listen to dat port
-app.listen(3002, function(){
-    //console.log("listening");
+app.listen(app.get('port'), function(){
+    console.log("The application is listening on port " + app.get('port'))
 });
     
     

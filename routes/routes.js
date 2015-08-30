@@ -3,8 +3,6 @@ var fileBefore;
 var fileAfter;
 var hbs = require('hbs');
 var fs = require('fs');
-var ejs = require('ejs');
-
 
 hbs.registerPartial('header', fs.readFileSync('./views/partials/header.hbs', 'utf8'));
 
@@ -27,11 +25,14 @@ exports.damage = function(req, res){
     else{
         regions='';
     }
+    try{
     magicBefore = require('../bin/stats/getMagicBefore'+regions+'.json');
     magicAfter = require('../bin/stats/getMagicAfter'+regions+'.json');
     gamesBefore = require('../bin/stats/getChampGamesBefore'+regions+'.json');
     gamesAfter = require('../bin/stats/getChampGamesAfter'+regions+'.json');
-    
+    } catch (err){
+        res.send("You're silly.");
+    }
 
     
     var champDataLength = magicBefore.length;
