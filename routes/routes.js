@@ -184,11 +184,10 @@ exports.damage = function (req, res) {
     for(var i = 0; i < dataBefore.length; i++){
         for(var j = 0; j < dataAfter.length; j++){
             if(dataBefore[i].champname === dataAfter[j].champname){
+                if(dataBefore[i].sum > 0){
+    
                 concatData[num] = dataBefore[i]
                 concatData[num].afterSum = dataAfter[j].sum;
-                if(dataAfter[j].sum === undefined){
-                    console.log("YES");
-                }
                 
                 concatData[num].damageDifference = parseFloat(((concatData[num].afterSum - concatData[num].sum) / concatData[num].sum) * 100).toFixed(2);
                 if(concatData[num].damageDifference < 0){
@@ -218,6 +217,7 @@ exports.damage = function (req, res) {
                 num++;
                 
                 
+            }
             }
         }
     }
