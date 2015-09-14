@@ -28,6 +28,11 @@
     
 }
 
+.endorse{
+    font-family: 'Lato';
+    font-weight: 500;
+}
+    
 .table>tbody>tr>td, .table>tbody>tr>th,
 .table>tbody>tr:nth-child(odd)>td,
 .table>tbody>tr:nth-child(odd)>th {

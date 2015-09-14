@@ -33,7 +33,6 @@ exports.items= function (req, res) {
 
 
 exports.itemData = function (req, res) {
-    console.log(req.params);
     var itemAbbreviations = {
             "Blasting":"Blasting Wand",
             "Needlessly":"Needlessly Large Rod",
@@ -109,7 +108,7 @@ exports.itemData = function (req, res) {
                 
                 itemData[num].totalWinrateBefore = ((itemsBefore[i].totalitemwins / itemsBefore[i].amountbought)*100).toFixed(2);
                 itemData[num].totalWinrateAfter = ((itemsBefore[i].totalitemwinsAfter / itemsBefore[i].amountboughtAfter)*100).toFixed(2);
-                itemData[num].winrateDifference = itemData[num].totalWinrateAfter - itemData[num].totalWinrateBefore;
+                itemData[num].winrateDifference = parseFloat(itemData[num].totalWinrateAfter - itemData[num].totalWinrateBefore).toFixed(2);
                 console.log(itemData[num].winrateDifference);
                 
                 
@@ -149,7 +148,6 @@ exports.damage = function (req, res) {
     
     var region = req.params.region;
     var gamemode = req.params.gamemode;
-    console.log(req.path);
     if(req.path === '/champions'){
         res.redirect('/champions/');
         return;
