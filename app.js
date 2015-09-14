@@ -21,6 +21,7 @@ app.get('/items/', routes.items);
 app.get('/items/:item', routes.itemData);
 app.get('/items/:item/:gamemode', routes.itemData);
 app.get('/items/:item/:gamemode/:region', routes.itemData);
+app.get('/items/:item/:gamemode/:region#lol', routes.itemData);
 app.get('/champions/:gamemode/:region', routes.damage);
 app.get('/champions/:gamemode', routes.damage);
 

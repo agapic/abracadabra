@@ -30,6 +30,8 @@ exports.items= function (req, res) {
 };
 
 
+
+
 exports.itemData = function (req, res) {
     console.log(req.params);
     var itemAbbreviations = {
@@ -82,35 +84,39 @@ exports.itemData = function (req, res) {
     console.log(itemsBefore.length);
     console.log(itemsAfter.length);
     var itemData = [];
-        
+    var num = 0;
     for (i = 0; i < itemsBefore.length; i++){
         for(j = 0; j < itemsAfter.length; j++){
             if(itemsBefore[i].champname === itemsAfter[j].champname){
-                itemsBefore[i].amountboughtAfter = itemsAfter[j].amountbought;
-                itemsBefore[i].totalitemwinsAfter = itemsAfter[j].totalitemwins; 
-                itemsBefore[i].totalitemlossesAfter = itemsAfter[j].totalitemlosses;
+                itemsBefore[num].amountboughtAfter = itemsAfter[j].amountbought;
+                itemsBefore[num].totalitemwinsAfter = itemsAfter[j].totalitemwins; 
+                itemsBefore[num].totalitemlossesAfter = itemsAfter[j].totalitemlosses;
+                itemsBefore[num].totalWinrateBefore = itemsBefore[num].totalitemwins / itemsBefore[num].amountbought;
+                itemsBefore[num].totalWinrateAfter = itemsBefore[i].totalitemwinsAfter / itemsBefore[i].amountboughtAfter;
                 
                 for(n = 0; n < 6; n++){
-                itemsBefore[i]["item"+n+"winsAfter"] = itemsAfter[j]["item"+n+"wins"]
-                itemsBefore[i]["item"+n+"amountAfter"] = itemsAfter[j]["item"+n+"amount"]
-                itemsBefore[i]["item"+n+"lossesAfter"] = itemsAfter[j]["item"+n+"losses"]
+                itemsBefore[num]["item"+n+"winsAfter"] = itemsAfter[j]["item"+n+"wins"]
+                itemsBefore[num]["item"+n+"amountAfter"] = itemsAfter[j]["item"+n+"amount"]
+                itemsBefore[num]["item"+n+"lossesAfter"] = itemsAfter[j]["item"+n+"losses"]
                 }
-                itemData.push(itemsBefore[i]);
+                itemData.push(itemsBefore[num]);
 
             itemData.sort(function(a,b){
-                if(a.totalitemwins != undefined && b.totalitemwins != undefined){
-                    return parseFloat(a.totalitemwins) - parseFloat(b.totalitemwins);   
+                if(a.totalWinrateBefore != undefined && b.totalWinrateBefore != undefined){
+                    return parseFloat(a.totalWinrateBefore) - parseFloat(b.totalWinrateBefore);   
                 }
-                if(a.totalitemwins != undefined){
-                    return parseFloat(a.totalitemwins);  
+                if(a.totalWinrateBefore != undefined){
+                    return parseFloat(a.totalWinrateBefore);  
                 }
-                if(b.totalitemwins != undefined){
-                return parseFloat(b.totalitemwins*-1);  
+                if(b.totalWinrateBefore != undefined){
+                return parseFloat(b.totalWinrateBefore*-1);  
                 }
                 
             });
             itemData.reverse();
+            num++;
             }
+            
 
         }
     }
@@ -118,6 +124,7 @@ exports.itemData = function (req, res) {
     res.locals = {itemData: itemData, gamemode: gamemode, region: region, itemDisplay: itemDisplay, item: item};
     res.render('itemData', {layout: 'itemData'});
 };
+
 
 exports.damage = function (req, res) {
     
@@ -135,8 +142,7 @@ exports.damage = function (req, res) {
 
     if(!gamemode){
         console.log('none');
-        res.redirect('/champions/RANKED');
-        
+        res.redirect('/champions/RANKED');       
     }
     
     if(!region){
@@ -159,36 +165,48 @@ exports.damage = function (req, res) {
         res.send("You're silly.");
     }
     var concatData = [];
+    var num = 0;
     for(var i = 0; i < dataBefore.length; i++){
         for(var j = 0; j < dataAfter.length; j++){
             if(dataBefore[i].champname === dataAfter[j].champname){
-                concatData[i] = dataBefore[i]
-                concatData[i].afterSum = dataAfter[j].sum;
-                concatData[i].damageDifference = parseFloat(((concatData[i].sum - concatData[i].afterSum) / concatData[i].sum) * 100).toFixed(2);
-                if(concatData[i].damageDifference < 0){
-                  concatData[i].damageColor = 'red';
-                }else{
-                  concatData[i].damageColor = 'green';
+                concatData[num] = dataBefore[i]
+                concatData[num].afterSum = dataAfter[j].sum;
+                if(dataAfter[j].sum === undefined){
+                    console.log("YES");
                 }
-                concatData[i].gamesAfterWins = dataAfter[j].gamesAfterWins
-                concatData[i].gamesAfter = dataAfter[j].gamesAfter
-                concatData[i].gamesAfterWinrate = dataAfter[j].gamesAfterWinrate
-                concatData[i].damagePerGameBefore = parseFloat(concatData[i].sum / concatData[i].gamesBefore).toFixed(0);
-                concatData[i].damagePerGameAfter = parseFloat(concatData[i].afterSum / concatData[i].gamesAfter).toFixed(0);
-                concatData[i].winrateDifference = parseFloat(concatData[i].gamesAfterWinrate - concatData[i].gamesBeforeWinrate).toFixed(2);
-                if(concatData[i].winrateDifference < 0){
-                  concatData[i].winColor = 'red';
+                
+                concatData[num].damageDifference = parseFloat(((concatData[num].afterSum - concatData[num].sum) / concatData[num].sum) * 100).toFixed(2);
+                if(concatData[num].damageDifference < 0){
+                  concatData[num].damageColor = 'red';
                 }else{
-                  concatData[i].winColor = 'green';
+                  concatData[num].damageColor = 'green';
                 }
+                concatData[num].gamesAfterWins = dataAfter[j].gamesAfterWins
+                concatData[num].gamesAfter = dataAfter[j].gamesAfter
+                concatData[num].gamesAfterWinrate = dataAfter[j].gamesAfterWinrate
+                concatData[num].damagePerGameBefore = parseFloat(concatData[num].sum / concatData[num].gamesBefore).toFixed(0);
+                concatData[num].damagePerGameAfter = parseFloat(concatData[num].afterSum / concatData[num].gamesAfter).toFixed(0);
+                if(concatData[num].gamesBeforeWinrate === undefined){
+                    concatData[num].gamesBeforeWinrate = 0;
+                }
+                if(concatData[num].gamesAfterWinrate === undefined){
+                    concatData[num].gamesAfterWinrate = 0;   
+                }
+                
+                
+                concatData[num].winrateDifference = parseFloat(concatData[num].gamesAfterWinrate - concatData[num].gamesBeforeWinrate).toFixed(2);
+                if(concatData[num].winrateDifference < 0){
+                  concatData[num].winColor = 'red';
+                }else{
+                  concatData[num].winColor = 'green';
+                }
+                num++;
+                
                 
             }
         }
     }
     
-
-    
- 
     
     res.locals = {champData: concatData, gamemode: gamemode, region: region};
     res.render('partials/damage', {layout: 'champions'});
