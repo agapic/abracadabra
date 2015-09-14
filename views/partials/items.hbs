@@ -1,0 +1,192 @@
+
+<script>
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+</script>
+
+<div class="im-centered">
+    <div class="container">
+        <div class="wrapper" style="text-align:center;margin-right:9em;">
+            <div class="various-content" >
+                <header class="section-header">
+                    <h3 style="color:aliceblue;">
+                        <a href="/items/">
+                            <span class="glyphicon glyphicon-circle-arrow-left white"></span>
+                        </a>	  
+                        Go back to the items homepage.
+                    </h3>
+                    <h3 style="color:aliceblue;text-align:center;padding-top:20px;">
+                        Item: {{itemDisplay}} <br> Gamemode: {{gamemode}} <br>Region: {{#if region}} {{region}} {{else}} overall {{/if}} 
+                    </h3>
+                </header>
+            </div>
+
+            <div class="dropdown">
+                <div class="btn-group">
+                    <button class="dropdown-toggle button" type="button" data-toggle="dropdown"><span>Menu</span></button>
+                
+                    <ul class="dropdown-menu">
+                      <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">Normal</a>
+                        <ul class="dropdown-menu">        
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/BR">Brazil</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/EUNE">Europe Northeast</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/EUW">Europe West</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/KR">Korea</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/LAN">Latin America North</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/LAS">Latin America South</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/NA">North America</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/OCE">Oceanic</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/RU">Russia</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/NORMAL/TR">Turkey</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a tabindex="-1" href="/items/{{item}}/NORMAL/">Overall</a></li>
+                        </ul>
+                      </li>
+                      <div class="divider"></div>
+               
+                      <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">Ranked</a>
+                        <ul class="dropdown-menu">        
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/BR">Brazil</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/EUNE">Europe Northeast</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/EUW">Europe West</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/KR">Korea</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/LAN">Latin America North</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/LAS">Latin America South</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/NA">North America</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/OCE">Oceanic</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/RU">Russia</a></li>
+                            <li><a tabindex="-1"  href="/items/{{item}}/RANKED/TR">Turkey</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a tabindex="-1" href="/items/{{item}}/RANKED">Overall</a></li>
+                        </ul>
+                      </li>
+                        
+                      <div class="divider"></div>
+                        
+                      <li><a href="/items">Item Home</a></li>
+                    
+                      <div class="divider"></div>             
+                    
+                      <li><a href="/">Homepage</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div id="datatable">
+                    <table class = "table" style="table-layout: auto">
+                        <tbody>
+                            {{#each itemData}}
+                            <tr>
+                                <td  style="vertical-align: middle"><img src ="/img/champions/{{champname}}.png" ></td> 
+                                <td> <div id="{{champname}}" style="width:550px; height:auto;">  </div><hr align="left" width="600px"></div></td>
+                </div>
+                            </tr>
+        
+        <script>Highcharts.setOptions({
+    chart: {
+        borderColor: "#000000",
+        borderWidth: 2,
+        borderRadius: 20,
+        height: 275,
+        
+        style: {
+            fontFamily: 'Lato'
+        }
+        
+    }
+});
+$(function () {
+    $('#{{champname}}').highcharts({
+
+        chart: {
+            type: 'column'
+        },
+
+
+        title: {
+            text: '{{champname}} Item Purchases',
+            style: { "font-size": "24px",
+                     "font-weight":700,
+                     "background-color":"#cccccc"
+                   }
+        },
+
+        xAxis: {
+            categories: ['Overall','First', 'Second', 
+                         'Third', 'Fourth', 'Fifth', 'Sixth'],
+
+        },
+
+        yAxis: {
+            allowDecimals: false,
+            min: 0,
+            title: {
+                text: 'Purchases'
+            }
+        },
+
+        tooltip: {
+            
+                        positioner: function () {
+                return { x: 250, y: 37 };
+            },
+            formatter: function () {
+                if(this.x==='Overall' && this.series.name==='Patch 5.11 Wins'){
+                    var winrate = ((parseFloat("{{totalitemwins}}")/parseFloat("{{amountbought}}"))*100).toFixed(2) + '%';
+                    return '<b>' + this.series.name + '</b>' + ': ' + this.y +
+                    '<br><b> Winrate: </b>' + winrate;
+                }
+                if(this.x==='Overall' && this.series.name==='Patch 5.14 Wins'){
+                    var winrate = ((parseFloat("{{totalitemwinsAfter}}")/parseFloat("{{amountboughtAfter}}"))*100).toFixed(2) + '%';
+                    return '<b>' + this.series.name + '</b>' + ': ' + this.y +
+                    '<br><b> Winrate: </b>' + winrate;
+                }
+                if(this.x === 'Overall'){
+                    return '<b>'+ this.series.name  + '</b>: ' + this.y;
+                }
+                return '<b>'+ this.series.name + ', '+ this.x +' Item</b>: ' + this.y;
+            }
+        },
+
+        plotOptions: {
+            column: {
+                stacking: 'normal'
+            }
+        },
+
+        series: [{
+            name: 'Patch 5.11 Wins',
+            data: [parseInt("{{totalitemwins}}"), parseInt("{{item0wins}}"), parseInt("{{item1wins}}"), parseInt("{{item2wins}}"), parseInt("{{item3wins}}"),parseInt("{{item4wins}}"),parseInt("{{item5wins}}")],
+            stack: 'before'
+        }, {
+            name: 'Patch 5.11 Total',
+            data: [parseInt("{{amountbought}}"), parseInt("{{item0amount}}"), parseInt("{{item1amount}}"), parseInt("{{item2amount}}"), parseInt("{{item3amount}}"),parseInt("{{item4amount}}"),parseInt("{{item5amount}}")],
+            stack: 'before'
+        }, {
+            name: 'Patch 5.14 Wins',
+            data: [parseInt("{{totalitemwinsAfter}}"), parseInt("{{item0winsAfter}}"), parseInt("{{item1winsAfter}}"), parseInt("{{item2winsAfter}}"), parseInt("{{item3winsAfter}}"),parseInt("{{item4winsAfter}}"),parseInt("{{item5winsAfter}}")],
+            stack: 'after'
+        }, {
+            name: 'Patch 5.14 Total',
+            data: [parseInt("{{amountboughtAfter}}"), parseInt("{{item0amountAfter}}"), parseInt("{{item1amountAfter}}"), parseInt("{{item2amountAfter}}"), parseInt("{{item3amountAfter}}"),parseInt("{{item4amountAfter}}"),parseInt("{{item5amountAfter}}")],
+            stack: 'after'
+        }]
+    });
+});
+</script>
+
+                    {{/each}}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>

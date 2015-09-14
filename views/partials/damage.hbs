@@ -1,53 +1,88 @@
-
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Region
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <li><a href="/damageHome/damage/BR">Brazil</a></li>
-    <li><a href="/damageHome/damage/EUNE">Europe Northeast</a></li>
-    <li><a href="/damageHome/damage/EUW">Europe West</a></li>
-     <li><a href="/damageHome/damage/KR">Korea</a></li>
-    <li><a href="/damageHome/damage/LAN">Latin America North</a></li>
-    <li><a href="/damageHome/damage/LAS">Latin America South</a></li>
-      <li><a href="/damageHome/damage/NA">North America</a></li>
-      <li><a href="/damageHome/damage/OCE">Oceanic</a></li>
-      <li><a href="/damageHome/damage/RU">Russia</a></li>
-      <li><a href="/damageHome/damage/TR">Turkey</a></li>
-      <li role="separator" class="divider"></li>
-      <li><li><a href="/damageHome/damage/">Overall</a></li></li>
-    </ul>
-</div>    
-<div id="datatable">
-<table class = "ui striped table">
-    <thead><tr><th>Champion Name</th><th>Patch 5.11 Magic Damage</th><th>Patch 5.14 Magic Damage</th><th>Magic Damage Difference</th><th>Damage per game Before</th><th>Damage per game Before</th><th>Patch 5.11 Winrate</th><th>Patch 5.14 Winrate</th><th>Winrate Difference</th></tr></thead>
-    <tbody>
-
-        {{#each champDamageData}}
-        
-        <tr>
-            <td> {{champname}}</td> 
-            <td> {{sum}}</td>
-            <td>{{afterSum}}</td>
-            <td>{{damageDifference}}%</td>
-            <td>{{damagePerGameBefore}} ({{gamesBefore}} game(s))</td>
-            <td>{{damagePerGameAfter}} ({{gamesAfter}} game(s))</td>
-            <!--
-            <td> {{beforeWinRate}}</td>
-            <td>{{afterWinRate}}</td>
-<td> {{winRateDifference}}%</td>
-            -->
-        </tr>
-        
-        {{/each}} 
-
-    </tbody></table>
-        
-        
-
+<div class="container">
+  <div class="row">
+  <div class="dropdown col-md-4">
+      <div class="btn-group">
+          <button class="dropdown-toggle button" type="button" data-toggle="dropdown"><span>Menu</span></button>
+            <ul class="dropdown-menu">
+                <li class="dropdown-submenu">
+                  <a tabindex="-1" href="#">Normal</a>
+                  <ul class="dropdown-menu">
+                      <li><a tabindex="-1"  href="/champions/NORMAL/BR">Brazil</a></li>
+                      <li><a tabindex="-1"  href="/champions/NORMAL/EUNE">Europe Northeast</a></li>
+                      <li><a tabindex="-1"  href="/champions/NORMAL/EUW">Europe West</a></li>
+                      <li><a tabindex="-1"  href="/champions/NORMAL/KR">Korea</a></li>
+                      <li><a tabindex="-1"  href="/champions/NORMAL/LAN">Latin America North</a></li>
+                      <li><a tabindex="-1"  href="/champions/NORMAL/LAS">Latin America South</a></li>
+                      <li><a tabindex="-1"  href="/champions/NORMAL/NA">North America</a></li>
+                      <li><a tabindex="-1"  href="/champions/NORMAL/OCE">Oceanic</a></li>
+                      <li><a tabindex="-1"  href="/champions/NORMAL/RU">Russia</a></li>
+                      <li><a tabindex="-1"  href="/champions/NORMAL/TR">Turkey</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a tabindex="-1" href="/champions/NORMAL/">Overall</a></li>
+                  </ul>
+                </li>
+                <div class="divider"></div>
+                <li class="dropdown-submenu">
+                  <a tabindex="-1" href="#">Ranked</a>
+                  <ul class="dropdown-menu">
+                      <li><a tabindex="-1"  href="/champions/RANKED/BR">Brazil</a></li>
+                      <li><a tabindex="-1"  href="/champions/RANKED/EUNE">Europe Northeast</a></li>
+                      <li><a tabindex="-1"  href="/champions/RANKED/EUW">Europe West</a></li>
+                      <li><a tabindex="-1"  href="/champions/RANKED/KR">Korea</a></li>
+                      <li><a tabindex="-1"  href="/champions/RANKED/LAN">Latin America North</a></li>
+                      <li><a tabindex="-1"  href="/champions/RANKED/LAS">Latin America South</a></li>
+                      <li><a tabindex="-1"  href="/champions/RANKED/NA">North America</a></li>
+                      <li><a tabindex="-1"  href="/champions/RANKED/OCE">Oceanic</a></li>
+                      <li><a tabindex="-1"  href="/champions/RANKED/RU">Russia</a></li>
+                      <li><a tabindex="-1"  href="/champions/RANKED/TR">Turkey</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a tabindex="-1" href="/champions/RANKED">Overall</a></li>
+                  </ul>
+                </li>
+                <div class="divider"></div>
+                <div class="divider"></div>
+                <li><a href="/">Homepage</a></li>
+          </ul>
+      </div>
+  </div>
+    <div class="col-md-8">
+      <h3>Region: {{region}} Gamemode: {{gamemode}}</h3>
     </div>
+  </div>
+  <div id="row col-md-12 datatable">
+      <table class = "ui striped table">
+          <thead>
+              <tr>
+                  <th>Champion Name</th>
+                  <th>Patch 5.11 Magic Damage</th>
+                  <th>Patch 5.14 Magic Damage</th>
+                  <th>Magic Damage Difference</th>
+                  <th>Patch 5.11 - Damage Per Game</th>
+                  <th>Patch 5.14 - Damage Per Game</th>
+                  <th>Patch 5.11 Winrate</th>
+                  <th>Patch 5.14 Winrate</th>
+                  <th>Winrate Difference</th>
+              </tr>
+          </thead>
+
+          <tbody>
+              {{#each champData}}
+              <tr>
+                  <td> <b>{{champname}}</b></td>
+                  <td> {{sum}}</td>
+                  <td>{{afterSum}}</td>
+                  <td class="{{damageColor}}">{{damageDifference}}%</td>
+                  <td>{{damagePerGameBefore}} ({{gamesBefore}} game(s))</td>
+                  <td>{{damagePerGameAfter}} ({{gamesAfter}} game(s))</td>
+                  <td> {{gamesBeforeWinrate}}</td>
+                  <td>{{gamesAfterWinrate}}</td>
+                  <td class="{{winColor}}"> {{winrateDifference}}%</td>
+              </tr>
+
+              {{/each}}
+          </tbody>
+      </table>
+  </div>
+</div>
 
 
-
-     
