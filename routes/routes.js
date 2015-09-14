@@ -81,45 +81,60 @@ exports.itemData = function (req, res) {
     } catch (err){
         console.log("error");
     }
-    console.log(itemsBefore.length);
-    console.log(itemsAfter.length);
+
     var itemData = [];
     var num = 0;
     for (i = 0; i < itemsBefore.length; i++){
         for(j = 0; j < itemsAfter.length; j++){
             if(itemsBefore[i].champname === itemsAfter[j].champname){
-                itemsBefore[num].amountboughtAfter = itemsAfter[j].amountbought;
-                itemsBefore[num].totalitemwinsAfter = itemsAfter[j].totalitemwins; 
-                itemsBefore[num].totalitemlossesAfter = itemsAfter[j].totalitemlosses;
-                itemsBefore[num].totalWinrateBefore = itemsBefore[num].totalitemwins / itemsBefore[num].amountbought;
-                itemsBefore[num].totalWinrateAfter = itemsBefore[i].totalitemwinsAfter / itemsBefore[i].amountboughtAfter;
+                itemData[num] = itemsBefore[i];
+                itemData[num].amountboughtAfter = itemsAfter[j].amountbought;
+                
+                if(itemsBefore[i].totalitemwins === undefined){
+                    itemsBefore[i].totalitemwins = 0;
+                }
+                
+                if(itemsAfter[j].totalitemwins === undefined){
+                    itemsAfter[j].totalitemwins = 0;
+                }
+                    
+                itemData[num].totalitemwinsAfter = itemsAfter[j].totalitemwins;
+                
+                itemData[num].totalitemlossesAfter = itemsAfter[j].totalitemlosses;
+                
+                if(itemData[num].totalitemwinsAfter === undefined){
+                    itemData[num].totalitemwinsAfter = 0;
+                }
+                
+                
+                itemData[num].totalWinrateBefore = ((itemsBefore[i].totalitemwins / itemsBefore[i].amountbought)*100).toFixed(2);
+                itemData[num].totalWinrateAfter = ((itemsBefore[i].totalitemwinsAfter / itemsBefore[i].amountboughtAfter)*100).toFixed(2);
+                itemData[num].winrateDifference = itemData[num].totalWinrateAfter - itemData[num].totalWinrateBefore;
+                console.log(itemData[num].winrateDifference);
+                
                 
                 for(n = 0; n < 6; n++){
-                itemsBefore[num]["item"+n+"winsAfter"] = itemsAfter[j]["item"+n+"wins"]
-                itemsBefore[num]["item"+n+"amountAfter"] = itemsAfter[j]["item"+n+"amount"]
-                itemsBefore[num]["item"+n+"lossesAfter"] = itemsAfter[j]["item"+n+"losses"]
+                itemData[num]["item"+n+"winsAfter"] = itemsAfter[j]["item"+n+"wins"]
+                itemData[num]["item"+n+"amountAfter"] = itemsAfter[j]["item"+n+"amount"]
+                itemData[num]["item"+n+"lossesAfter"] = itemsAfter[j]["item"+n+"losses"]
                 }
-                itemData.push(itemsBefore[num]);
 
-            itemData.sort(function(a,b){
-                if(a.totalWinrateBefore != undefined && b.totalWinrateBefore != undefined){
-                    return parseFloat(a.totalWinrateBefore) - parseFloat(b.totalWinrateBefore);   
-                }
-                if(a.totalWinrateBefore != undefined){
-                    return parseFloat(a.totalWinrateBefore);  
-                }
-                if(b.totalWinrateBefore != undefined){
-                return parseFloat(b.totalWinrateBefore*-1);  
-                }
-                
-            });
-            itemData.reverse();
             num++;
             }
             
 
         }
     }
+    
+    
+                itemData.sort(function(a,b){
+                    return parseFloat(a.winrateDifference) - parseFloat(b.winrateDifference);   
+                
+  
+                
+            });
+    
+    itemData.reverse();
 
     res.locals = {itemData: itemData, gamemode: gamemode, region: region, itemDisplay: itemDisplay, item: item};
     res.render('itemData', {layout: 'itemData'});

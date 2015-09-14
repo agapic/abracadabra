@@ -17,7 +17,7 @@
                         Go back to the items homepage.
                     </h3>
                     <h3 style="color:aliceblue;text-align:center;padding-top:20px;">
-                        Item: {{itemDisplay}} <br> Gamemode: {{gamemode}} <br>Region: {{#if region}} {{region}} {{else}} overall {{/if}} 
+                        Item: {{itemDisplay}} <br> Gamemode: {{gamemode}} <br>Region: {{#if region}} {{region}} {{else}} Overall {{/if}} 
                     </h3>
                 </header>
             </div>
@@ -134,16 +134,16 @@ $(function () {
         tooltip: {
             
                         positioner: function () {
-                return { x: 250, y: 37 };
+                return { x: 225, y: 37 };
             },
             formatter: function () {
                 if(this.x==='Overall' && this.series.name==='Patch 5.11 Wins'){
-                    var winrate = ((parseFloat("{{totalitemwins}}")/parseFloat("{{amountbought}}"))*100).toFixed(2) + '%';
+                    var winrate = "{{totalWinrateBefore}}" + '%';
                     return '<b>' + this.series.name + '</b>' + ': ' + this.y +
                     '<br><b> Winrate: </b>' + winrate;
                 }
                 if(this.x==='Overall' && this.series.name==='Patch 5.14 Wins'){
-                    var winrate = ((parseFloat("{{totalitemwinsAfter}}")/parseFloat("{{amountboughtAfter}}"))*100).toFixed(2) + '%';
+                    var winrate = "{{totalWinrateAfter}}" + '%';
                     return '<b>' + this.series.name + '</b>' + ': ' + this.y +
                     '<br><b> Winrate: </b>' + winrate;
                 }
