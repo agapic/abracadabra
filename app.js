@@ -12,8 +12,7 @@ app.set('view options', {layout: 'layout'});
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
- 
-    
+
 //Routes
 app.get('/', routes.index);
 app.get('/champions', routes.champions);
@@ -24,7 +23,16 @@ app.get('/items/:item/:gamemode/:region', routes.itemData);
 app.get('/items/:item/:gamemode/:region#lol', routes.itemData);
 app.get('/champions/:gamemode/:region', routes.damage);
 app.get('/champions/:gamemode', routes.damage);
+app.get('*', routes.index);
 
+app.use(errorHandler);
+function errorHandler(err, req, res, next) {
+  if (res.headersSent) {
+    return next(err);
+  }
+  res.status(500);
+  res.send("Error, no such page! Please politely, and kindly go back. :)");
+}
 //Listen to dat port
 app.listen(app.get('port'), function(){
     console.log("The application is listening on port " + app.get('port'))

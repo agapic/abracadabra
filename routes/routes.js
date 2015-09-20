@@ -32,7 +32,8 @@ exports.items= function (req, res) {
 
 
 
-exports.itemData = function (req, res) {
+exports.itemData = function (req, res, err) {
+
     var itemAbbreviations = {
             "Blasting":"Blasting Wand",
             "Needlessly":"Needlessly Large Rod",
