@@ -1,21 +1,8 @@
 #abracadabra
 
+Website displayed at http://abra.andrewgapic.com 
+
 List of queries that will be used more or less for data analysis. <br>
-Note that the context of 'before' refers to patch 5.11 whereas after refers to patch 5.14
+Abracadabra was originally made for Riot Games' API Challenge for the game League of Legends. However, due to the circumstances that it was started late, the final version was unable to be released in time for the deadline. As such, it is more of an experiment of my own to learn Node.js, Postgres, and Handlebars.js. In addition, I dealt with the common headaches faced when working with async javascript (this was my first time using javascript essentially), and gained a deeper understanding as to how important it is to choose the right tool for the job. 
 
-#Magic Damage
-Magic damage before/after [ranked: all regions, region specific], [normal: all regions, region specific]
-
-#Win Rates
-
-Win Rate before/after [ranked: all regions, region specific], [normal: all regions, region specific]
-
-#Items
-Note: there are 6 item slots and 16 AP items that underwent a change
-
-Count the number of times that each of the 16 AP items appeared in each item slot before and after the patch<br>
-[ranked: all regions, region specific], [normal: all regions, region specific]
-
-Then, count the number of wins associated with each instance. From this, the application provides a good start as to how win rates were affected in each region/gametype based on item purchases.
-
-Once this is done, champion specific data will be provided. But again, the crux of the application is based on items. Champion data is a big bonus.
+With respect to the application itself, Abracadabra [a pun on magic damage] analyzes two major gameplay aspects for League of Legends: champion winrates for the sixteen relevant magic items that were changed in a major patch [5.11-5.14], and damage/winrate statistics for each champion. You can filter by region and by ranked/normal. One neat aspect of the application is that it visually displays WHEN the items were bought, thus bringing some form of temporal analysis into the picture. I found this important, as it provides an even deeper understanding of the effects.
