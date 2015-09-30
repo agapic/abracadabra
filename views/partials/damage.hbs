@@ -45,29 +45,30 @@
       </div>
   </div>
     <div class="col-md-8">
-      <h3>Region: {{region}} Gamemode: {{gamemode}}</h3>
+      <h3>Region: {{#if region}} {{region}} {{else}} Overall {{/if}}  <br>Gamemode: {{gamemode}}</h3>
     </div>
   </div>
   <div id="row col-md-12 datatable">
       <table class = "sortable ui striped table">
           <thead>
               <tr>
-                  <th>Champion Name</th>
-                  <th>Patch 5.11 Magic Damage</th>
-                  <th>Patch 5.14 Magic Damage</th>
-                  <th>Magic Damage Difference</th>
-                  <th>Patch 5.11 - Damage Per Game</th>
-                  <th>Patch 5.14 - Damage Per Game</th>
-                  <th>Patch 5.11 Winrate</th>
-                  <th>Patch 5.14 Winrate</th>
-                  <th>Winrate Difference</th>
+                  <th><b>Champion Name</b></th>
+                  <th><b>Patch 5.11 Magic Damage</b></th>
+                  <th><b>Patch 5.14 Magic Damage</b></th>
+                  <th><b>Magic Damage Difference</b></th>
+                  <th><b>Patch 5.11 - Damage Per Game</b></th>
+                  <th><b>Patch 5.14 - Damage Per Game</b></th>
+                  <th><b>Patch 5.11 Winrate</b></th>
+                  <th><b>Patch 5.14 Winrate</b></th>
+                  <th><b>Winrate Difference</b></th>
+
               </tr>
           </thead>
 
           <tbody>
               {{#each champData}}
               <tr>
-                  <td> <b>{{champname}}</b></td>
+                  <td> {{champname}}</td>
                   <td> {{sum}}</td>
                   <td>{{afterSum}}</td>
                   <td class="{{damageColor}}"><b>{{damageDifference}}%</b></td>
@@ -83,5 +84,3 @@
       </table>
   </div>
 </div>
-
-
