@@ -2,7 +2,7 @@
 
 <h4>What is Abracadabra?</h4>
 
-Simple. Abracadabra is a League of Legends application that analyzes gameplay changes over 2 major patches. Specifically, it analyzes the ability power items (or <b>magic</b> items, hence abracadabra) that were changed between patches 5.11 and 5.14. The inspiration came from Riot Games' (which owns League of Legends) API challenge 2.0. I had only learned about the challenge just a few days before the deadline, so I wasn't able to get the final product ready by then. Despite this, I continued hacking away at it.
+Simple. Abracadabra is a League of Legends application that analyzes gameplay changes over 2 major patches. It was made with <b>Node.js, Postgres, Python, Handlebars, Express, and Async. </b>  Specifically, it analyzes the ability power items (or <b>magic</b> items, hence abracadabra) that were changed between patches 5.11 and 5.14. The inspiration came from Riot Games' (which owns League of Legends) API challenge 2.0. I had only learned about the challenge just a few days before the deadline, so I wasn't able to get the final product ready by then. Despite this, I continued hacking away at it. 
 <br>
 
 There were many headaches involved with the making of this app, mainly with the async nature of Javascript/Node. But, you live and learn. There were things that needed to be done synchronously in this application, and rather than having a pentillion callbacks, I decided to just hack a quick python script together, and voila. You learn how important it is to have the right tool for the right job at your exposure.
