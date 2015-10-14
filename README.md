@@ -17,7 +17,7 @@ There were many headaches involved with the making of this app, mainly with the 
 <h4>Features</h4>
 A quick rundown on the features:
 
-<b>`items`</b> let's you select from the 16 major ability power items that were changed. You can filter by region or game type and it shows the data visually for champions in order of the largest difference in winrate. In addition, it shows <em>the winrate for each individual item slot on a given champion</em>.
+<b>`items`</b> lets you select from the 16 major ability power items that were changed. You can filter by region or game type and it shows the data visually for champions in order of the largest difference in winrate. In addition, it shows <em>the winrate for each individual item slot on a given champion</em>.
 
 <b>`damage`</b> This page has an emphasis on magic damage difference over the patches, and winrate difference over the patches. Each column is sortable simply by clicking on the header.
 
