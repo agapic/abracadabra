@@ -1,8 +1,8 @@
 var pg = require('pg');
 var fs = require('fs');
-var champNames = require('./champNames');
-var itemNames = require('./itemNames');
-var regions = require('./regions');
+var champNames = require('../name_abbreviations/champNames.js');
+var itemNames = require('../name_abbreviations/itemNames.js');
+var regions = require('../name_abbreviations/regions.js');
 var matchTypes = ['NORMAL_5X5', 'RANKED_SOLO'];
 var patchVersions = ['5.11', '5.14'];
 
@@ -12,18 +12,21 @@ var client = new pg.Client(connectionString);
 client.connect();
 
 function insert() {
-    'use strict';
+
     /*For loops to insert JSON files for every match type, patch version, region. Each region has 10 participants, which the
     is the purpose for the most inner loop*/
     var g, h, i, k, j, file, queryConfig, query;
-    for (g = 0; g < patchVersions.length; g += 1) {
-        for (h = 0; h < matchTypes.length; h += 1) {
-            for (i = 0; i < regions.regionList().length; h += 1) {
-                for (k = 0; k < 10000; k += 1) {
-                    console.log("Finished " + k + " out of 10000 for region " + regions.regionList()[i] + " , game mode and patch " + matchTypes[1] + patchVersions[1]);
+    for (g = 0; g < patchVersions.length; g += 1) { //PatchVersions
+        for (h = 0; h < matchTypes.length; h += 1) { //Match Types
+            for (i = 0; i < regions.regionList().length; i += 1) { //Regions
+                for (k = 0; k < 10000; k += 1) { //10k matches per region
+                    console.log("Finished " + k + " out of 10000 for region " + regions.regionList()[i] + " , game mode and patch " + matchTypes[h] + patchVersions[g]);
+
                     //file is an individual JSON file retrieved after making REST API calls; only specific data from it will be inserted into the database
-                    file = JSON.parse(fs.readFileSync('../../' + patchVersions[g] + '/' + matchTypes[h] + '/' + regions.regionList()[i] + '/' + k + '.json', 'utf8'));
+console.log(h);
+                    file = JSON.parse(fs.readFileSync('../../../' + patchVersions[g] + '/' + matchTypes[h] + '/' + regions.regionList()[i] + '/' + k + '.json', 'utf8'));
                     for (j = 0; j < file.participants.length; j += 1) {
+
                         try {
                             queryConfig = { //Insert JSON files from API calls into database
                                 text: 'INSERT INTO match(champname, region, matchtype, item0, item1, item2, item3, item4, item5, matchversion, magicDamageDealtToChampions, highestAchievedSeasonTier, lane, winner) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14);',
@@ -46,15 +49,16 @@ function insert() {
                             };
 
                         } catch (err) {
-                            continue;
+                           continue;
                         }
-                        
+                        query = client.query(queryConfig);
                     }
-                    query = client.query(queryConfig);
+
                 }
             }
         }
     }
+    query.on('end', function() { client.end(); });
 }
 
 //Cleanse simply deletes a row if the participant has no item slots that include the changed AP items
@@ -69,5 +73,4 @@ function cleanse() {
 
 //Run the functions
 insert();
-cleanse();
-
+//cleanse();

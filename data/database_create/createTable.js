@@ -26,4 +26,3 @@ var query = client.query('CREATE TABLE IF NOT EXISTS match(id SERIAL,\
     );
 
 query.on('end', function() { client.end(); });
-
