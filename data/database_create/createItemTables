@@ -8,7 +8,7 @@ var client = new pg.Client(connectionString);
 
 client.connect();
 
-var query = client.query('CREATE TABLE IF NOT EXISTS participant(id SERIAL,\
+var query = client.query('CREATE TABLE IF NOT EXISTS match(id SERIAL,\
                                        champName TEXT,\
                                        region TEXT,\
                                        matchType TEXT,\
@@ -23,12 +23,5 @@ var query = client.query('CREATE TABLE IF NOT EXISTS participant(id SERIAL,\
                                        highestAchievedSeasonTier TEXT,\
                                        winner BOOLEAN)'
     );
-
-query = query + client.query('CREATE TABLE IF NOT EXISTS match(id SERIAL,\
-                                       region TEXT,\
-                                       matchType TEXT,\
-                                       matchVersion TEXT,\
-                                       winner BOOLEAN)'
-    );)
 
 query.on('end', function() { client.end(); });

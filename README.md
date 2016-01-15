@@ -1,6 +1,6 @@
 #<a href = "http://abra.agapic.xyz">abracadabra</a>
 
-Website displayed at http://abra.andrewgapic.com 
+Website displayed at http://abra.agapic.xyz
 
 Abracadabra was originally made for Riot Games' API Challenge for the game League of Legends. However, due to the unfortunate circumstances that it was started late, the final version was unable to be released in time for the deadline. As such, it is more of an experiment of my own to learn Node.js, Postgres, and Handlebars.js. In addition, I dealt with the common headaches faced when working with async javascript (this was my first time using javascript essentially), and gained a deeper understanding as to how important it is to choose the right tool for the job. 
 
