@@ -8,7 +8,7 @@
       "email": "andrewjdg@gmail.com"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "nodejs app.js"
   },
   "dependencies": {
     "express": "^4.0.0",
@@ -16,9 +16,7 @@
     "handlebars": "^3.0.0",
     "hbs": "3.1.0",
     "pg": "4.4.1",
-    "async": "1.4.2",
-    "deasync": "0.1.0"
-      
+    "async": "1.4.2"      
       
      
   },
