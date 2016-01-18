@@ -6,14 +6,14 @@ var connectionString = fileConnector.connection;
 var client = new pg.Client(connectionString);
 
 var matchTable = client.query('CREATE TABLE IF NOT EXISTS match (\
-                              id INTEGER PRIMARY KEY,\
+                              id BIGINT PRIMARY KEY,\
                               region TEXT,\
                               matchType TEXT,\
                               matchVersion TEXT)'
                              );
 
 var teamTable = client.query('CREATE TABLE IF NOT EXISTS team (\
-                              matchid INTEGER REFERENCES match(id),\
+                              matchid BIGINT REFERENCES match(id),\
                               id INTEGER,\
                               PRIMARY KEY(matchid, id),\
                               winner TEXT)'
@@ -36,7 +36,7 @@ var championTable = client.query('CREATE TABLE IF NOT EXISTS champion (\
 var participantTable = client.query('CREATE TABLE IF NOT EXISTS participant (\
                                      PRIMARY KEY(matchid, id),\
                                      id INTEGER NOT NULL,\
-                                     matchid INTEGER REFERENCES match(id),\
+                                     matchid BIGINT REFERENCES match(id),\
                                      championid INTEGER REFERENCES champion(id),\
                                      teamid INTEGER,\
                                      FOREIGN KEY (matchid, teamid) REFERENCES team(matchid, id),\
