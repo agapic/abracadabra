@@ -7,62 +7,69 @@ import time
 import itertools
 import requests
 
-
-def append_items(_participant):
-    item_list = {}
-    for i in xrange(0,5):
-        item_list["item" + i] = _participant['stats']['item' + i]
-    return json.dumps(item_list)
-
-def main():
-    count = 0
+def connection(query):
     connection = open("../data/database_create/connection.js")
     line = connection.read()
     words = line.split()
-
     conn_string = (words[5][1:-2])
     conn = psycopg2.connect(conn_string)
     cur = conn.cursor()
+    cur.execute(query);
+    conn.commit()
+    conn.close()
 
-    time_between_requests = 600/float(500)
-    time.sleep(time_between_requests)
-    #matchid is called upon frequently through each iteration
-    matchid = file.matchId
-    cur.execute("INSERT INTO match (id, region, matchType, matchVersion) VALUES (%s, %s, %s, %s);"
-                % (matchid, file.region, file.queueType, file.matchVersion[0:4]))
-
-    while count < 10:
-        cur.execute("INSERT INTO player (id, name) VALUES (%s, %s);"
-                    % (file.participantIdentities[count]['summonerId'],
-                       file.participantIdentities[count]['summonerName']))
-        count = count + 1
+def insert_data(_file):
     count = 0
+    matchid = _file['matchId']
+    connection("INSERT INTO match (id, region, matchType, matchVersion) VALUES (%s, '%s', '%s', '%s');"
+                % (matchid, _file['region'], _file['queueType'], _file['matchVersion'][0:4]))
+    # Add player table in later -- using old API currently
+    # while count < 10:
+    #     cur.execute("INSERT INTO player (id, name) VALUES (%s, %s);"
+    #                 % (_file['participantIdentities'][count]['player']['summonerId'],
+    #                    _file['participantIdentities'][count]['player']['summonerName']))
+    #     count = count + 1
+    # count = 0
     while count < 2:
-        cur.execute("INSERT INTO team (matchid, id, winner) VALUES\
-                    (SELECT id FROM match WHERE id=%s, %s, %s);"
-                    % (matchid, file.teams[count]['teamId'], file.teams[count]['winner']))
+        connection("INSERT INTO team (matchid, id, winner) VALUES\
+                    ((SELECT id FROM match WHERE id=%s), %s, '%s');"
+                    % (matchid, _file['teams'][count]['teamId'], _file['teams'][count]['winner']))
         count = count + 1
     count = 0
 
     while count < 10:
         #initialize list of all items participant uses
-        participant = file.participants[count]
-        participant_items = append_items(participant)
-        cur.execute("INSERT INTO participants (id, matchid, championid, playerid, magicDamageDealtToChampions,\
-                    damageDealtToChampions, items, highestAchievedSeasonTier)\
+        participant = _file['participants'][count]
+        connection("INSERT INTO participant (id, matchid, championid, teamid, magicDamageDealtToChampions,\
+                    damageDealtToChampions, item0, item1, item2, item3, item4, item5, highestAchievedSeasonTier)\
                     VALUES(%s,\
-                    SELECT id FROM match WHERE id = %s,\
-                    SELECT id FROM champion WHERE id =%s,\
-                    SELECT id FROM player WHERE id = %s,\
-                    %s, %s, %s, %s);"
-
-                    % (file.participants[count].participantId,\
+                    (SELECT id FROM match WHERE id = %s),\
+                    (SELECT id FROM champion WHERE id = %s),\
+                    %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s');"
+                    % (participant['participantId'],\
                        matchid,\
-                       )
-
-
-    conn.commit()
-    cur.connection.close()
+                       participant['championId'],\
+                       participant['teamId'],\
+                       participant['stats']['magicDamageDealtToChampions'],\
+                       participant['stats']['totalDamageDealtToChampions'],\
+                       participant['stats']['item0'],\
+                       participant['stats']['item1'],\
+                       participant['stats']['item2'],\
+                       participant['stats']['item3'],\
+                       participant['stats']['item4'],\
+                       participant['stats']['item5'],\
+                       participant['highestAchievedSeasonTier']))
+        count = count + 1
+def main():
+    file_handles = []
+    try:
+        for root, subFolders, files in os.walk("D:\league_5.115.14_data"):
+            for f in files:
+                file_handles.append(open(os.path.join(root, f)))
+                insert_data(json.load(file_handles[-1]))
+    finally:
+        for fh in file_handles:
+            fh.close()
 
 if __name__ == "__main__":
 	main()
