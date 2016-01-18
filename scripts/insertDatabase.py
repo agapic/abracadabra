@@ -67,6 +67,7 @@ def main():
     for root, subFolders, files in os.walk("/home/abra_data/"):
         for f in files:
             file = open(os.path.join(root,f))
+            print root, f
             insert_data(json.load(file))
             match_count = match_count + 1
             print "Currently on match " + `match_count`

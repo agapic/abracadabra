@@ -33,6 +33,11 @@ var championTable = client.query('CREATE TABLE IF NOT EXISTS champion (\
                                   name TEXT)'
                                 );
 
+var itemTable = client.query('CREATE TABLE IF NOT EXISTS item (\
+                              id INTEGER PRIMARY KEY,\
+                              name TEXT)'
+                            );
+
 var participantTable = client.query('CREATE TABLE IF NOT EXISTS participant (\
                                      PRIMARY KEY(matchid, id),\
                                      id INTEGER NOT NULL,\
