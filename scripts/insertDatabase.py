@@ -57,16 +57,17 @@ def insert_data(_file):
                        participant['highestAchievedSeasonTier']))
         count = count + 1
     conn.commit()
+
 def main():
-    file_handles = []
-    try:
-        for root, subFolders, files in os.walk("D:\league_5.115.14_data"):
-            for f in files:
-                file_handles.append(open(os.path.join(root, f)))
-                insert_data(json.load(file_handles[-1]))
-    finally:
-        for fh in file_handles:
-            fh.close()
+    match_count = 0
+    for root, subFolders, files in os.walk("/home/abra_data"):
+        for f in files:
+            file = open(os.path.join(root,f))
+            insert_data(json.load(file))
+            match_count = match_count + 1
+            print "Currently on match" + match_count
+            file.close()
+
     conn.close()
 if __name__ == "__main__":
 	main()
