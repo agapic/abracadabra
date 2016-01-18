@@ -7,21 +7,17 @@ import time
 import itertools
 import requests
 
-def connection(query):
-    connection = open("../data/database_create/connection.js")
-    line = connection.read()
-    words = line.split()
-    conn_string = (words[5][1:-2])
-    conn = psycopg2.connect(conn_string)
-    cur = conn.cursor()
-    cur.execute(query);
-    conn.commit()
-    conn.close()
+connection = open("../data/database_create/connection.js")
+line = connection.read()
+words = line.split()
+conn_string = (words[5][1:-2])
+conn = psycopg2.connect(conn_string)
+cur = conn.cursor()
 
 def insert_data(_file):
     count = 0
     matchid = _file['matchId']
-    connection("INSERT INTO match (id, region, matchType, matchVersion) VALUES (%s, '%s', '%s', '%s');"
+    cur.execute("INSERT INTO match (id, region, matchType, matchVersion) VALUES (%s, '%s', '%s', '%s');"
                 % (matchid, _file['region'], _file['queueType'], _file['matchVersion'][0:4]))
     # Add player table in later -- using old API currently
     # while count < 10:
@@ -31,7 +27,7 @@ def insert_data(_file):
     #     count = count + 1
     # count = 0
     while count < 2:
-        connection("INSERT INTO team (matchid, id, winner) VALUES\
+        cur.execute("INSERT INTO team (matchid, id, winner) VALUES\
                     ((SELECT id FROM match WHERE id=%s), %s, '%s');"
                     % (matchid, _file['teams'][count]['teamId'], _file['teams'][count]['winner']))
         count = count + 1
@@ -40,7 +36,7 @@ def insert_data(_file):
     while count < 10:
         #initialize list of all items participant uses
         participant = _file['participants'][count]
-        connection("INSERT INTO participant (id, matchid, championid, teamid, magicDamageDealtToChampions,\
+        cur.execute("INSERT INTO participant (id, matchid, championid, teamid, magicDamageDealtToChampions,\
                     damageDealtToChampions, item0, item1, item2, item3, item4, item5, highestAchievedSeasonTier)\
                     VALUES(%s,\
                     (SELECT id FROM match WHERE id = %s),\
@@ -60,6 +56,7 @@ def insert_data(_file):
                        participant['stats']['item5'],\
                        participant['highestAchievedSeasonTier']))
         count = count + 1
+    conn.commit()
 def main():
     file_handles = []
     try:
@@ -70,6 +67,6 @@ def main():
     finally:
         for fh in file_handles:
             fh.close()
-
+    conn.close()
 if __name__ == "__main__":
 	main()
