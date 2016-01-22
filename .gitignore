@@ -3,7 +3,6 @@
 # Example .gitignore files: https://github.com/github/gitignore
 /bower_components/
 /node_modules/
-/data/database_create/connection.js
 /.idea
 /scripts/.idea
 /data/api_key.txt
