@@ -1,0 +1,36 @@
+{
+  "name": "cc-angular-perfect-scrollbar",
+  "version": "1.1.1",
+  "description": "A directive to allow the use of perfect scrollbar in angular",
+  "main": "src/angular-perfect-scrollbar.js",
+  "keywords": [
+    "angular",
+    "perfect",
+    "scrollbar"
+  ],
+  "dependencies": {
+    "perfect-scrollbar": "~0.6.7",
+    "angular": "*"
+  },
+  "authors": [
+    "Drew Miller"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/itsdrewmiller/angular-perfect-scrollbar",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests",
+    "test"
+  ],
+  "_release": "1.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.1",
+    "commit": "dfc7a43ae6f5c1881c8c14b162404087b8560384"
+  },
+  "_source": "git://github.com/CareerCruising/angular-perfect-scrollbar.git",
+  "_target": "<=1.1.1",
+  "_originalSource": "cc-angular-perfect-scrollbar"
+}

@@ -4,21 +4,36 @@
   "description": "Analyzing AP item changes before and after a major patch",
   "main": "index.js",
   "author": {
-      "name": "Andrew Gapic",
-      "email": "andrewjdg@gmail.com"
+    "name": "Andrew Gapic",
+    "email": "andrewjdg@gmail.com"
   },
   "scripts": {
-    "start": "nodejs app.js"
+    "start": "NODE_ENV=development ./node_modules/.bin/nodemon server.js"
   },
   "dependencies": {
+    "async": "1.4.2",
     "express": "^4.0.0",
-    "request": "^2.0.0",
-    "handlebars": "^3.0.0",
-    "hbs": "3.1.0",
-    "pg": "4.4.1",
-    "async": "1.4.2"      
-      
-     
+    "grunt": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-ng-annotate": "latest",
+    "grunt-ng-constant": "latest",
+    "grunt-shell": "latest",
+    "grunt-shell-spawn": "latest",
+    "jade": "latest",
+    "knex": "^0.9.0",
+    "pg": "^4.4.1",
+    "pm2": "~0.15.x",
+    "request": "^2.0.0"
+  },
+  "devDependencies": {
+    "grunt-concurrent": "latest",
+    "grunt-contrib-jshint": "latest",
+    "grunt-contrib-less": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-mocha-test": "latest",
+    "grunt-newer": "latest",
+    "grunt-nodemon": "0.0.x",
+    "livereloadx": "latest"
   },
   "engines": {
     "node": "0.12.x"
