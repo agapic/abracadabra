@@ -16,10 +16,26 @@ cur = conn.cursor()
 
 def insert_data(_file):
     try:
+
         count = 0
         matchid = _file['matchId']
-        cur.execute("INSERT INTO match (id, region, matchType, matchVersion) VALUES (%s, '%s', '%s', '%s');"
-                    % (matchid, _file['region'], _file['queueType'], _file['matchVersion'][0:4]))
+        cur.execute("INSERT INTO matchversion (matchversion) SELECT (%s)\
+                     WHERE NOT EXISTS (SELECT * FROM matchversion WHERE matchversion='%s';"
+                     % (_file['matchVersion'][0:4]))
+        cur.execute("INSERT INTO matchtype (matchtype) SELECT (%s)\
+                     WHERE NOT EXISTS (SELECT * FROM matchtype WHERE matchtype='%s';"
+                     % (_file['queueType']))
+        cur.execute("INSERT INTO region (region) SELECT (%s)\
+                     WHERE NOT EXISTS (SELECT * FROM region WHERE region='%s';"
+                     % (_file['region']))
+        conn.commit()
+        cur.execute("INSERT INTO match (match_id, region_id, matchtype_id, matchversion_id) VALUES\
+                   (%s,\
+                   (SELECT region_id FROM region WHERE region='%s'),\
+                   (SELECT matchtype_id FROM matchtype WHERE matchtype='%s'),\
+                   (SELECT matchversion_id FROM matchversion WHERE matchversion='%s'));"
+                   % (matchid, _file['region'], _file['queueType'], _file['matchVersion'][0:4]))
+        conn.commit()
         # Add player table in later -- using old API currently
         # while count < 10:
         #     cur.execute("INSERT INTO player (id, name) VALUES (%s, %s);"
@@ -27,26 +43,17 @@ def insert_data(_file):
         #                    _file['participantIdentities'][count]['player']['summonerName']))
         #     count = count + 1
         # count = 0
-        while count < 2:
-            cur.execute("INSERT INTO team (matchid, id, winner) VALUES\
-                        ((SELECT id FROM match WHERE id=%s), %s, '%s');"
-                        % (matchid, _file['teams'][count]['teamId'], _file['teams'][count]['winner']))
-            count = count + 1
-        count = 0
 
         while count < 10:
             #initialize list of all items participant uses
             participant = _file['participants'][count]
-            cur.execute("INSERT INTO participant (id, matchid, championid, teamid, magicDamageDealtToChampions,\
-                        damageDealtToChampions, item0, item1, item2, item3, item4, item5, highestAchievedSeasonTier)\
-                        VALUES(%s,\
-                        (SELECT id FROM match WHERE id = %s),\
-                        (SELECT id FROM champion WHERE id = %s),\
+            cur.execute("INSERT INTO participant (champion_id, match_id, magic_damage_dealt_to_champions,\
+                        damage_dealt_to_champions, item0, item1, item2, item3, item4, item5, winner, highestAchievedSeasonTier)\
+                        VALUES((SELECT champion_id FROM champion WHERE champion_id = %s),\
+                               (SELECT match_id FROM match WHERE match_id = %s),\  
                         %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s');"
-                        % (participant['participantId'],\
+                        % (participant['championId'],\
                            matchid,\
-                           participant['championId'],\
-                           participant['teamId'],\
                            participant['stats']['magicDamageDealtToChampions'],\
                            participant['stats']['totalDamageDealtToChampions'],\
                            participant['stats']['item0'],\
@@ -55,6 +62,7 @@ def insert_data(_file):
                            participant['stats']['item3'],\
                            participant['stats']['item4'],\
                            participant['stats']['item5'],\
+                           participant $FIND WINNEr
                            participant['highestAchievedSeasonTier']))
             count = count + 1
         conn.commit()
