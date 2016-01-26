@@ -1,4 +1,4 @@
-var app = angular.module('abra', ['ngRoute']);
+var app = angular.module('abra', ['ngRoute', 'ui.bootstrap', 'ngResource']);
 
 app.config(["$routeProvider", function ($routeProvider) {
 	$routeProvider.
@@ -26,4 +26,5 @@ app.config(["$routeProvider", function ($routeProvider) {
 // });
 app.controller('IndexController', ["$scope", function($scope) {
 	$scope.message = 'This is sort of an index. Lol.';
+	$scope.isCollapsed = false;
 }]);

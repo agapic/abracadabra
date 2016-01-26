@@ -7,7 +7,7 @@ import time
 import itertools
 import requests
 
-connection = open("../data/database_create/connection.js")
+connection = open("../config/connection.js")
 line = connection.read()
 words = line.split()
 conn_string = (words[5][1:-2])
@@ -62,7 +62,7 @@ def insert_data(_file):
                            participant['stats']['item3'],\
                            participant['stats']['item4'],\
                            participant['stats']['item5'],\
-                           participant $FIND WINNEr
+                           participant['stats']['winner'],\
                            participant['highestAchievedSeasonTier']))
             count = count + 1
         conn.commit()

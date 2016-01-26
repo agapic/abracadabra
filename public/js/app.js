@@ -1,4 +1,4 @@
-var app = angular.module('abra', ['ngRoute']);
+var app = angular.module('abra', ['ngRoute', 'ui.bootstrap', 'ngResource']);
 
 app.config(function ($routeProvider) {
 	$routeProvider.

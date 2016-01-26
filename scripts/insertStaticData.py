@@ -25,18 +25,18 @@ def champions(cur):
         name = str(champion['name'])
         if "'" in name:
             name = name.replace("'", "''")
-        cur.execute("INSERT INTO champion (id, version, name) VALUES (%s, '%s', '%s');"
+        cur.execute("INSERT INTO champion (champion_id, version, name) VALUES (%s, '%s', '%s');"
                     % (champion['id'], req['version'], name))
     return
 
 def main():
-    file = open("../data/database_create/connection.js")
+    file = open("../config/connection.js")
     line = file.read()
     words = line.split()
     conn_string = (words[5][1:-2])
     conn = psycopg2.connect(conn_string)
     cur = conn.cursor()
-    items(cur)
+    #items(cur)
     champions(cur)
     conn.commit()
     cur.connection.close()

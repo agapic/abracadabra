@@ -117,24 +117,9 @@ module.exports = function(grunt) {
             concat: {
                 //command: 'cat public/css/*.less.css > public/css/style.css',
             },
-                        md5sum: {
-                command: 'cp public/dist/js/all.min.js public/dist/js/`md5sum public/dist/js/all.min.js | cut -d " " -f 1`.js',
-            },
-            pm2_kill: {
-                command: './node_modules/pm2/bin/pm2 kill',
-            },
-            pm2_start: {
-                command: 'NODE_ENV=' + grunt.option('target') + ' ./node_modules/pm2/bin/pm2 start server.js -x -o ./logs/log.txt -e ./logs/log.txt',
-                options: {
-                    async: true
-                }
-            },
-            pm2_restart: {
-                command: './node_modules/pm2/bin/pm2 restart all'
-            },
-            wait: {
-                command: 'sleep 2'
-            }
+                        //md5sum: {
+               // command: 'cp public/dist/js/all.min.js public/dist/js/`md5sum public/dist/js/all.min.js | cut -d " " -f 1`.js',
+           // },
         }
   });
 
@@ -160,19 +145,13 @@ module.exports = function(grunt) {
             'jshint',
             'ngAnnotate',
             'uglify',
-            'shell:md5sum',
-            'shell:pm2_kill'
+           // 'shell:md5sum',
         ]);
 
         if (target == 'development') {
             grunt.task.run([
                 'concurrent:target',
                 'livereloadx'
-            ]);
-        } else {
-            grunt.task.run([
-                'shell:pm2_start',
-                'shell:wait'
             ]);
         }
     });
