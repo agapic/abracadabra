@@ -6,3 +6,6 @@
 /.idea
 /scripts/.idea
 /data/api_key.txt
+/config/connection.js
+.DS_Store
+public/dist
