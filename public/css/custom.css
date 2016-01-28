@@ -1,3 +1,87 @@
+@font-face {
+  font-family: 'MuseoSans';
+  src: url('../fonts/MuseoSans_700.otf');
+}
+@font-face {
+  font-family: 'MuseoSansSmall';
+  src: url('../fonts/MuseoSans-300.otf');
+}
+.title {
+  font-family: 'MuseoSans', sans-serif;
+  font-size: 85px;
+  text-transform: uppercase;
+  text-align: center;
+  color: white;
+  letter-spacing: -0.6px;
+  padding-bottom: 14px;
+  line-height: 1.4em;
+}
+
+
+.description {
+  font-family: 'MuseoSans', sans-serif;
+  font-size: 1.3em;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  color: white;
+  letter-spacing: 1.0px;
+  padding-bottom: 40px;
+}
+.endorse {
+  font-family: 'MuseoSansSmall', sans-serif;
+  letter-spacing: 0.7px;
+  font-size: 0.9em;
+  position:absolute;
+  bottom:0;
+  height:50px;
+  width: auto;
+  text-align: center;
+}
+
+.image-items {
+ width: 50%;
+  margin: auto;
+}
+
+.image-damage {
+  width: 50%;
+  margin: auto;
+}
+.panel-body {
+  background-color: #FF6563;
+  font-family: 'MuseoSans', sans-serif;
+  letter-spacing: 1.2px;
+}
+.panel {
+  border: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.row {
+  width: 400px;
+  margin:auto;
+
+}
+
+.page-content {
+  text-align: center;
+   height:100%;
+     background-image: url(http://img00.deviantart.net/e30d/i/2014/043/0/9/fizz_with_shark__league_of_legends_flat_design_bg_by_hotchkissgraphics-d7682n7.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+body { 
+background-color: #233557;
+ color: white;
+
+ }
+
+ a {
+  color: white;
+ }
 .red{
   color: firebrick;
 }
@@ -28,10 +112,6 @@
     
 }
 
-.endorse{
-    font-family: 'Lato';
-    font-weight: 500;
-}
     
 .table>tbody>tr>td, .table>tbody>tr>th,
 .table>tbody>tr:nth-child(odd)>td,
@@ -39,11 +119,6 @@
     border-top: none;
 }
 
-.container img {
-position:relative;
-left:0;
-top:0;
-}
 .container .table-div {
 position:absolute; 
 padding-left:125px;
@@ -150,15 +225,7 @@ padding-left:125px;
 .frame .wrapper a img {
 color: black;
 }
-img {
-    opacity: 0.6;
-    border-width:2px;
-    border-style: solid;
-}
 
-img:hover {
-    opacity: 1.0;
-}
 
 .white, .white a {
   color: #fff;
