@@ -13,7 +13,7 @@ def items(cur):
     for item in req['data'].itervalues():
         name = item['name']
         if "'" in name: name = name.replace("'", "'\'")
-        cur.execute("INSERT INTO item (id, name) VALUES (%s, '%s');"
+        cur.execute("INSERT INTO item (item_id, name) VALUES (%s, '%s');"
                     % (item['id'], name))
     return
 
@@ -36,8 +36,8 @@ def main():
     conn_string = (words[5][1:-2])
     conn = psycopg2.connect(conn_string)
     cur = conn.cursor()
-    #items(cur)
-    champions(cur)
+    items(cur)
+    #champions(cur)
     conn.commit()
     cur.connection.close()
 

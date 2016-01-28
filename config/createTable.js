@@ -51,71 +51,11 @@ return Promise.all([
     table.boolean('winner');
     table.string('highest_achieved_season_tier');
   }),
+
+  pg.schema.withSchema('public').createTable('item', function (table) {
+    table.integer('item_id').primary();
+    table.string('name');
+  })
 ]).then(function (done){
     console.log(done);
 });
-
-
-
-
-
-// var connectionString = require('./connection.js').connection;
-// var client = new pg.Client(connectionString);
-
-// var matchTable = client.query('CREATE TABLE IF NOT EXISTS match (\
-//                               id BIGINT PRIMARY KEY,\
-//                               region TEXT,\
-//                               matchType TEXT,\
-//                               matchVersion TEXT)'
-//                              );
-
-// var matchVersionTable = client.query('CREATE TABLE IF NOT EXISTS matchversion (\
-//                               matchversion_id integer PRIMARY KEY,\
-//                               matchVersion TEXT)'
-//                              );
-
-// var teamTable = client.query('CREATE TABLE IF NOT EXISTS team (\
-//                               matchid BIGINT REFERENCES match(id),\
-//                               id INTEGER,\
-//                               PRIMARY KEY(matchid, id),\
-//                               winner TEXT)'
-//                             );
-
-/*Todo: add player table inside. Was not practical to start it off that way as the older
-match version API does not have summonerids available in the API request. Just need to reference
-it in the participant table.*/
-/*var playerTable = client.query('CREATE TABLE IF NOT EXISTS player (\
-                                id INTEGER PRIMARY KEY,\
-                                name INTEGER)'
-                              );
-*/
-// var championTable = client.query('CREATE TABLE IF NOT EXISTS champion (\
-//                                   id INTEGER PRIMARY KEY,\
-//                                   version TEXT,\
-//                                   name TEXT)'
-//                                 );
-
-// var itemTable = client.query('CREATE TABLE IF NOT EXISTS item (\
-//                               id INTEGER PRIMARY KEY,\
-//                               name TEXT)'
-//                             );
-
-// var participantTable = client.query('CREATE TABLE IF NOT EXISTS participant (\
-//                                      PRIMARY KEY(matchid, id),\
-//                                      id INTEGER NOT NULL,\
-//                                      matchid BIGINT REFERENCES match(id),\
-//                                      championid INTEGER REFERENCES champion(id),\
-//                                      teamid INTEGER,\
-//                                      FOREIGN KEY (matchid, teamid) REFERENCES team(matchid, id),\
-//                                      magicDamageDealtToChampions REAL,\
-//                                      damageDealtToChampions REAL,\
-//                                      item0 TEXT,\
-//                                      item1 TEXT,\
-//                                      item2 TEXT,\
-//                                      item3 TEXT,\
-//                                      item4 TEXT,\
-//                                      item5 TEXT,\
-//                                      highestAchievedSeasonTier TEXT)'
-//                                    );
-// client.connect();
-// client.on('drain', function() { client.end(); });
