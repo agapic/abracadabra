@@ -8,6 +8,11 @@ app.config(["$routeProvider", function ($routeProvider) {
 		templateUrl: 'views/index.html'
 		
 	}).
+    when('/items', {
+        controller: 'ItemController',
+        templateUrl: 'views/items.html'
+        
+    }).
    otherwise({
     templateUrl: 'views/404.html',
     resolve: {
@@ -17,14 +22,46 @@ app.config(["$routeProvider", function ($routeProvider) {
     }
 
 });
-
-
 }])
+
+.config(["$locationProvider", function ($locationProvider) {
+        $locationProvider.hashPrefix("!");
+    }])
 
 // app.controller('IndexController', function($scope) {
 // 	$scope.message = 'This is sort of an index. Lol.';
 // });
 app.controller('IndexController', ["$scope", function($scope) {
-	$scope.message = 'This is sort of an index. Lol.';
-	$scope.isCollapsed = false;
+	
+}]);
+app.controller('ItemController', ["$scope", "$location", "$routeParams", "Item", function($scope, $location, $routeParams, Item) {
+	$scope.itemImages = [];
+
+	$scope.init = function (){
+			Item.get_item_files({}, function(result) {
+                $scope.itemImages = result;
+            }, function(err) {
+            	console.log("err" + err);
+            });
+	};
+
+
+	$scope.getImagePath = function(itemName) {
+        return  '/img/item/' + itemName;
+	};
+
+}]);
+
+
+window.app.factory("Item", ["$resource", function ($resource) {
+    return $resource('api/items/',{},
+        {
+            get_item_files: {
+                method: 'GET',
+                isArray: true,
+                params: {}
+            },
+
+
+        });
 }]);

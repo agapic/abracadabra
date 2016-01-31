@@ -1,0 +1,28 @@
+<div class = "page-content" data-ng-init="init()"> 
+	<header class="section-header container-fluid">
+	    <div class="row">
+		    <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+		    	<h2 class = "title">Abracadabra</h2>
+		        <h4 class="description">
+		        	Select an item to analyze</h4>
+				<h4>
+					<a href="/#!/">
+						<span class="glyphicon glyphicon-circle-arrow-left white"></span>  		Recall
+					</a>
+				</h4>
+		    </div>
+	    </div>
+	</header>
+	<div ng-repeat="myImage in itemImages">
+
+<img ng-src="{{getImagePath(myImage)}}"/>
+
+</div>
+  
+
+		
+
+
+</div>
+
+

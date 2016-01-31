@@ -8,6 +8,11 @@ app.config(function ($routeProvider) {
 		templateUrl: 'views/index.html'
 		
 	}).
+    when('/items', {
+        controller: 'ItemController',
+        templateUrl: 'views/items.html'
+        
+    }).
    otherwise({
     templateUrl: 'views/404.html',
     resolve: {
@@ -17,9 +22,11 @@ app.config(function ($routeProvider) {
     }
 
 });
-
-
 })
+
+.config(function ($locationProvider) {
+        $locationProvider.hashPrefix("!");
+    })
 
 // app.controller('IndexController', function($scope) {
 // 	$scope.message = 'This is sort of an index. Lol.';
