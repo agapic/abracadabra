@@ -13,16 +13,17 @@
 		    </div>
 	    </div>
 	</header>
-	<div ng-repeat="myImage in itemImages">
-
-<img ng-src="{{getImagePath(myImage)}}"/>
-
-</div>
-  
-
-		
-
-
+	<div class="container item-image-container">
+		<div class="row">
+			<div class="col-md-2 col-xs-4 item-grid" ng-repeat="item in itemImages">
+				<div class="item-container">
+					<a href="items/{{item  | split:'.':0}}">
+						<img class="item-image" ng-src="{{getImagePath(item)}}"/>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

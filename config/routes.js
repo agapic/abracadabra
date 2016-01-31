@@ -6,12 +6,10 @@ module.exports = function (app) {
     app.get('/api/items', items.getItemFiles);
 
     app.get('*', function(req, res) {
-        // Redirect to Angular URL if not requesting html template
+        // Redirect to frontend if not requesting html template
              if (!req.originalUrl.match(/\.html$/)) {
             return res.redirect('/#!' + req.originalUrl);
         }
-
-
     });
 
 	// var teams = require('../app/controllers/teams');
