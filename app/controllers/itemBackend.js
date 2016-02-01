@@ -4,11 +4,16 @@ var knex = require('knex');
 var fs = require('fs');
 var filestr = require('../../config/connection.js');
 var connString = filestr.connection;
-
-var pg = knex({
+	var pg = knex({
   client: 'pg',
-  connection: connString
+  connection: connString,
+   pool: {
+    min: 0,
+    max: 7
+  }
 });
+
+
 
 exports.getItemFiles = function(req, res) {
 	var files = fs.readdirSync(__dirname + '/../../public/img/item/');
@@ -22,38 +27,37 @@ exports.getItemFiles = function(req, res) {
 // }
 
 exports.getItem = function(req, res) {
-	pg.raw("select * from champion", [1]).then(function(resp) {
-	console.log(resp);
-});
-
-
-
-	return res.json(req.params);
+	var itemId = req.params.itemId;
+	var query = "SELECT c.name, * FROM  (\
+				   SELECT p.champion_id\
+				        , count(p.item0 = ? OR NULL)::int2 AS it0\
+				        , count(p.item1 = ? OR NULL)::int2 AS it1\
+				        , count(p.item2 = ? OR NULL)::int2 AS it2\
+				        , count(p.item3 = ? OR NULL)::int2 AS it3\
+				        , count(p.item4 = ? OR NULL)::int2 AS it4\
+				        , count(p.item5 = ? OR NULL)::int2 AS it5\
+				   FROM   matchversion   mv\
+				   CROSS  JOIN matchtype mt\
+				   JOIN   match          m  USING (matchtype_id, matchversion_id)\
+				   JOIN   participant    p  USING (match_id)\
+				   WHERE  mv.matchversion = \'5.14\'\
+				   AND    mt.matchtype = \'RANKED_SOLO_5x5\'\
+				   AND    p.winner = True\
+				   GROUP  BY p.champion_id\
+				   HAVING count(p.item0 = ? OR NULL)::int2 > 0\
+				   OR count(p.item1 = ? OR NULL)::int2 > 0\
+				   OR count(p.item2 = ? OR NULL)::int2 > 0\
+				   OR count(p.item3 = ? OR NULL)::int2 > 0\
+				   OR count(p.item4 = ? OR NULL)::int2 > 0\
+				   OR count(p.item5 = ? OR NULL)::int2 > 0\
+				   ) p\
+				JOIN  champion c USING (champion_id)";
+	var bindings = [itemId, itemId, itemId, itemId, itemId, itemId, itemId,
+					itemId,itemId,itemId,itemId,itemId ]
+	return pg.raw(query, bindings).then(function(resp) {
+		return resp.rows;
+	}).then(function(rows) {
+		res.jsonp(rows);
+	});
 }
 // exports.show = function(req, res) {
-
-	
-// "SELECT c.name, * FROM  (\
-// 				   SELECT p.champion_id\
-// 				        , count(p.item0 = 3285 OR NULL)::int2 AS it0\
-// 				        , count(p.item1 = 3285 OR NULL)::int2 AS it1\
-// 				        , count(p.item2 = 3285 OR NULL)::int2 AS it2\
-// 				        , count(p.item3 = 3285 OR NULL)::int2 AS it3\
-// 				        , count(p.item4 = 3285 OR NULL)::int2 AS it4\
-// 				        , count(p.item5 = 3285 OR NULL)::int2 AS it5\
-// 				   FROM   matchversion   mv\
-// 				   CROSS  JOIN matchtype mt\
-// 				   JOIN   match          m  USING (matchtype_id, matchversion_id)\
-// 				   JOIN   participant    p  USING (match_id)\
-// 				   WHERE  mv.matchversion = \'5.14\'\
-// 				   AND    mt.matchtype = \'RANKED_SOLO_5x5\'\
-// 				   AND    p.winner = True\
-// 				   GROUP  BY p.champion_id\
-// 				   HAVING count(p.item0 = 3285 OR NULL)::int2 > 0\
-// 				   OR count(p.item1 = 3285 OR NULL)::int2 > 0\
-// 				   OR count(p.item2 = 3285 OR NULL)::int2 > 0\
-// 				   OR count(p.item3 = 3285 OR NULL)::int2 > 0\
-// 				   OR count(p.item4 = 3285 OR NULL)::int2 > 0\
-// 				   OR count(p.item5 = 3285 OR NULL)::int2 > 0\
-// 				   ) p\
-// 				JOIN  champion c USING (champion_id);"

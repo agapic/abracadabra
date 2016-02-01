@@ -6,12 +6,13 @@ app.config(["$routeProvider", function ($routeProvider) {
 	when('/', {
 		controller: 'IndexController',
 		templateUrl: 'views/index.html'
-		
 	}).
     when('/items', {
         controller: 'ItemController',
         templateUrl: 'views/items.html'
-        
+    }).
+    when('/items/:itemId', {
+        templateUrl: 'views/index.html'
     }).
    otherwise({
     templateUrl: 'views/404.html',
@@ -51,10 +52,13 @@ app.controller('ItemController', ["$scope", "$location", "$routeParams", "Item",
 
 	$scope.getItem = function(item) {
 		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
+
+
 		Item.item_query({ itemId: itemId}, function(result) {
-        	console.log("result" + result);
+        	console.log("result" + result + Object.keys(result));
+
         }, function(err) {
-        	console.log("err" + err);
+        	console.log("error" + err);
         });
 	};
 
@@ -68,10 +72,10 @@ window.app.factory("Item", ["$resource", function ($resource) {
         {
             get_item_files: {
                 method: 'GET',
-                isArray: true,
                 params: {
                 	action: 'items'
-                }
+                },
+                isArray: true
             },
 
             item_query: {

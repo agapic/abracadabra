@@ -3,10 +3,10 @@ window.app.factory("Item", function ($resource) {
         {
             get_item_files: {
                 method: 'GET',
-                isArray: true,
                 params: {
                 	action: 'items'
-                }
+                },
+                isArray: true
             },
 
             item_query: {

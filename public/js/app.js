@@ -6,12 +6,13 @@ app.config(function ($routeProvider) {
 	when('/', {
 		controller: 'IndexController',
 		templateUrl: 'views/index.html'
-		
 	}).
     when('/items', {
         controller: 'ItemController',
         templateUrl: 'views/items.html'
-        
+    }).
+    when('/items/:itemId', {
+        templateUrl: 'views/index.html'
     }).
    otherwise({
     templateUrl: 'views/404.html',

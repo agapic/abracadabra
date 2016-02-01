@@ -15,10 +15,13 @@ app.controller('ItemController', function($scope, $location, $routeParams, Item)
 
 	$scope.getItem = function(item) {
 		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
+
+
 		Item.item_query({ itemId: itemId}, function(result) {
-        	console.log("result" + result);
+        	console.log("result" + result + Object.keys(result));
+
         }, function(err) {
-        	console.log("err" + err);
+        	console.log("error" + err);
         });
 	};
 
