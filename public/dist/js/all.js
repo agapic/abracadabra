@@ -45,22 +45,42 @@ app.controller('ItemController', ["$scope", "$location", "$routeParams", "Item",
             });
 	};
 
-
 	$scope.getImagePath = function(itemName) {
         return  '/img/item/' + itemName;
 	};
+
+	$scope.getItem = function(item) {
+		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
+		Item.item_query({ itemId: itemId}, function(result) {
+        	console.log("result" + result);
+        }, function(err) {
+        	console.log("err" + err);
+        });
+	};
+
+	
 
 }]);
 
 
 window.app.factory("Item", ["$resource", function ($resource) {
-    return $resource('api/items/',{},
+    return $resource('api/:action/:itemId',{},
         {
             get_item_files: {
                 method: 'GET',
                 isArray: true,
-                params: {}
+                params: {
+                	action: 'items'
+                }
             },
+
+            item_query: {
+            	method: 'GET',
+            	params: {
+            		action: 'items',
+            		itemId: 'itemId'
+            	}
+            }
 
 
         });

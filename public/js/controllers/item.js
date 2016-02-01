@@ -9,10 +9,20 @@ app.controller('ItemController', function($scope, $location, $routeParams, Item)
             });
 	};
 
-
 	$scope.getImagePath = function(itemName) {
         return  '/img/item/' + itemName;
 	};
+
+	$scope.getItem = function(item) {
+		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
+		Item.item_query({ itemId: itemId}, function(result) {
+        	console.log("result" + result);
+        }, function(err) {
+        	console.log("err" + err);
+        });
+	};
+
+	
 
 });
 
