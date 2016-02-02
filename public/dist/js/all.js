@@ -52,13 +52,10 @@ app.controller('ItemController', ["$scope", "$location", "$routeParams", "Item",
 
 	$scope.getItem = function(item) {
 		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
-
-
 		Item.item_query({ itemId: itemId}, function(result) {
-        	console.log("result" + result + Object.keys(result));
-
+        	console.log("result" + result);
         }, function(err) {
-        	console.log("error" + err);
+        	console.log("err" + err);
         });
 	};
 
@@ -72,18 +69,20 @@ window.app.factory("Item", ["$resource", function ($resource) {
         {
             get_item_files: {
                 method: 'GET',
+                isArray: true,
                 params: {
                 	action: 'items'
-                },
-                isArray: true
+                }
             },
 
             item_query: {
             	method: 'GET',
+            	isArray: true,
             	params: {
             		action: 'items',
-            		itemId: 'itemId'
-            	}
+            		itemId: '@itemId'
+            	},
+            	cache: false
             }
 
 

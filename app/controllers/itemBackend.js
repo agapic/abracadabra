@@ -1,4 +1,5 @@
 var env = process.env.NODE_ENV || 'development';
+
 var config = require('../../config/config.js')[env];
 var knex = require('knex');
 var fs = require('fs');
@@ -27,6 +28,7 @@ exports.getItemFiles = function(req, res) {
 // }
 
 exports.getItem = function(req, res) {
+	console.log("test");
 	var itemId = req.params.itemId;
 	var query = "SELECT c.name, * FROM  (\
 				   SELECT p.champion_id\
@@ -57,7 +59,11 @@ exports.getItem = function(req, res) {
 	return pg.raw(query, bindings).then(function(resp) {
 		return resp.rows;
 	}).then(function(rows) {
+		console.log("rows");
 		res.jsonp(rows);
+		Promise.resolve();
+	}).catch(function(err){
+		console.log(err);
 	});
 }
 // exports.show = function(req, res) {
