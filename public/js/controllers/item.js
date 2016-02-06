@@ -1,4 +1,4 @@
-app.controller('ItemController', function($scope, $location, $routeParams, Item) {
+app.controller('ItemController', function($scope, $http, $location, $routeParams, Item) {
 	$scope.itemImages = [];
 
 	$scope.init = function (){
@@ -14,12 +14,15 @@ app.controller('ItemController', function($scope, $location, $routeParams, Item)
 	};
 
 	$scope.getItem = function(item) {
+		$http.defaults.timeout = 5000;
 		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
 		Item.item_query({ itemId: itemId}, function(result) {
-        	console.log("result" + result);
+        	console.dir(result);
         }, function(err) {
-        	console.log("err" + err);
+        	console.log(Object.keys(err))
         });
+
+
 	};
 
 	

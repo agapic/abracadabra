@@ -56,14 +56,14 @@ exports.getItem = function(req, res) {
 				JOIN  champion c USING (champion_id)";
 	var bindings = [itemId, itemId, itemId, itemId, itemId, itemId, itemId,
 					itemId,itemId,itemId,itemId,itemId ]
-	return pg.raw(query, bindings).then(function(resp) {
-		return resp.rows;
-	}).then(function(rows) {
-		console.log("rows");
-		res.jsonp(rows);
-		Promise.resolve();
-	}).catch(function(err){
-		console.log(err);
-	});
-}
+	return res.jsonp(pg.raw(query, bindings).then(function(suc){return suc.rows}));
+
+
+};
+// 	.then(function(resp) {
+// 		// res.send(resp.rows);
+// 	}).catch(function(err){
+// 		console.log(err);
+// 	});
+// }
 // exports.show = function(req, res) {

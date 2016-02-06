@@ -11,9 +11,9 @@ app.config(["$routeProvider", function ($routeProvider) {
         controller: 'ItemController',
         templateUrl: 'views/items.html'
     }).
-    when('/items/:itemId', {
-        templateUrl: 'views/index.html'
-    }).
+    // when('/items/:itemId', {
+    //     templateUrl: 'views/index.html'
+    // }).
    otherwise({
     templateUrl: 'views/404.html',
     resolve: {
@@ -29,13 +29,10 @@ app.config(["$routeProvider", function ($routeProvider) {
         $locationProvider.hashPrefix("!");
     }])
 
-// app.controller('IndexController', function($scope) {
-// 	$scope.message = 'This is sort of an index. Lol.';
-// });
 app.controller('IndexController', ["$scope", function($scope) {
 	
 }]);
-app.controller('ItemController', ["$scope", "$location", "$routeParams", "Item", function($scope, $location, $routeParams, Item) {
+app.controller('ItemController', ["$scope", "$http", "$location", "$routeParams", "Item", function($scope, $http, $location, $routeParams, Item) {
 	$scope.itemImages = [];
 
 	$scope.init = function (){
@@ -51,12 +48,15 @@ app.controller('ItemController', ["$scope", "$location", "$routeParams", "Item",
 	};
 
 	$scope.getItem = function(item) {
+		$http.defaults.timeout = 5000;
 		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
 		Item.item_query({ itemId: itemId}, function(result) {
-        	console.log("result" + result);
+        	console.dir(result);
         }, function(err) {
-        	console.log("err" + err);
+        	console.log(Object.keys(err))
         });
+
+
 	};
 
 	
@@ -77,12 +77,12 @@ window.app.factory("Item", ["$resource", function ($resource) {
 
             item_query: {
             	method: 'GET',
-            	isArray: true,
+
             	params: {
             		action: 'items',
             		itemId: '@itemId'
             	},
-            	cache: false
+                timeout:3000,
             }
 
 

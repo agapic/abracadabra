@@ -11,12 +11,12 @@ window.app.factory("Item", function ($resource) {
 
             item_query: {
             	method: 'GET',
-            	isArray: true,
+
             	params: {
             		action: 'items',
             		itemId: '@itemId'
             	},
-            	cache: false
+                timeout:3000,
             }
 
 
