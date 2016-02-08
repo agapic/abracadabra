@@ -28,6 +28,7 @@
   color: white;
   letter-spacing: 1.0px;
   padding-bottom: 40px;
+
 }
 
 
@@ -119,6 +120,7 @@
 .item-image {
   width: 48px;
   height: 48px;
+  cursor: pointer;
 }
 
 .item-image:hover {

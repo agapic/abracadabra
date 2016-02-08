@@ -1,4 +1,4 @@
-app.controller('ItemController', function($scope, $http, $location, $routeParams, Item) {
+app.controller('ItemController', function($scope, $http, $location, $routeParams, Item, spinnerService) {
 	$scope.itemImages = [];
 
 	$scope.init = function (){
@@ -14,6 +14,9 @@ app.controller('ItemController', function($scope, $http, $location, $routeParams
 	};
 
 	$scope.getItem = function(item) {
+		$scope.spinnerService = spinnerService;
+		spinnerService.show('itemSpinner1');
+		spinnerService.show('itemSpinner2');
 		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
 		Item.item_query({ itemId: itemId}, function(result) {
         	console.dir(result);

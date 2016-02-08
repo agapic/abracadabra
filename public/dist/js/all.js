@@ -1,4 +1,4 @@
-var app = angular.module('abra', ['ngRoute', 'ui.bootstrap', 'ngResource']);
+var app = angular.module('abra', ['ngRoute', 'ui.bootstrap', 'ngResource', 'angularSpinners']);
 
 app.config(["$routeProvider", function ($routeProvider) {
 	$routeProvider.
@@ -32,7 +32,7 @@ app.config(["$routeProvider", function ($routeProvider) {
 app.controller('IndexController', ["$scope", function($scope) {
 	
 }]);
-app.controller('ItemController', ["$scope", "$http", "$location", "$routeParams", "Item", function($scope, $http, $location, $routeParams, Item) {
+app.controller('ItemController', ["$scope", "$http", "$location", "$routeParams", "Item", "spinnerService", function($scope, $http, $location, $routeParams, Item, spinnerService) {
 	$scope.itemImages = [];
 
 	$scope.init = function (){
@@ -48,6 +48,9 @@ app.controller('ItemController', ["$scope", "$http", "$location", "$routeParams"
 	};
 
 	$scope.getItem = function(item) {
+		$scope.spinnerService = spinnerService;
+		spinnerService.show('itemSpinner1');
+		spinnerService.show('itemSpinner2');
 		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
 		Item.item_query({ itemId: itemId}, function(result) {
         	console.dir(result);
