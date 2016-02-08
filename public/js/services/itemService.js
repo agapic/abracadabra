@@ -11,14 +11,11 @@ window.app.factory("Item", function ($resource) {
 
             item_query: {
             	method: 'GET',
-
+                isArray: true,
             	params: {
             		action: 'items',
-            		itemId: '@itemId'
+            		itemId: 'itemId'
             	},
-                timeout:3000,
             }
-
-
         });
 });

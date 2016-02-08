@@ -11,9 +11,9 @@ app.config(["$routeProvider", function ($routeProvider) {
         controller: 'ItemController',
         templateUrl: 'views/items.html'
     }).
-    // when('/items/:itemId', {
-    //     templateUrl: 'views/index.html'
-    // }).
+    when('/items/:itemId', {
+        templateUrl: 'views/itemData.html'
+    }).
    otherwise({
     templateUrl: 'views/404.html',
     resolve: {
@@ -48,10 +48,10 @@ app.controller('ItemController', ["$scope", "$http", "$location", "$routeParams"
 	};
 
 	$scope.getItem = function(item) {
-		$http.defaults.timeout = 5000;
 		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
 		Item.item_query({ itemId: itemId}, function(result) {
         	console.dir(result);
+        	$location.url("/items/"+itemId);
         }, function(err) {
         	console.log(Object.keys(err))
         });
@@ -77,15 +77,12 @@ window.app.factory("Item", ["$resource", function ($resource) {
 
             item_query: {
             	method: 'GET',
-
+                isArray: true,
             	params: {
             		action: 'items',
-            		itemId: '@itemId'
+            		itemId: 'itemId'
             	},
-                timeout:3000,
             }
-
-
         });
 }]);
 app.filter('split', function() {

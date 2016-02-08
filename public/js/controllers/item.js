@@ -14,10 +14,10 @@ app.controller('ItemController', function($scope, $http, $location, $routeParams
 	};
 
 	$scope.getItem = function(item) {
-		$http.defaults.timeout = 5000;
 		var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
 		Item.item_query({ itemId: itemId}, function(result) {
         	console.dir(result);
+        	$location.url("/items/"+itemId);
         }, function(err) {
         	console.log(Object.keys(err))
         });

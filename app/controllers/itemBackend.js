@@ -56,7 +56,12 @@ exports.getItem = function(req, res) {
 				JOIN  champion c USING (champion_id)";
 	var bindings = [itemId, itemId, itemId, itemId, itemId, itemId, itemId,
 					itemId,itemId,itemId,itemId,itemId ]
-	return res.jsonp(pg.raw(query, bindings).then(function(suc){return suc.rows}));
+	return pg.raw(query, bindings).then(function(response){
+		res.jsonp(response.rows);
+		Promise.resolve();
+	}).catch(function (err){
+		res.status(404).send(err);
+	});
 
 
 };
