@@ -12,7 +12,8 @@ app.config(function ($routeProvider) {
         templateUrl: 'views/items.html'
     }).
     when('/items/:itemId', {
-        templateUrl: 'views/itemData.html'
+        controller: 'ItemDataController',
+        templateUrl: 'views/itemData.html',
     }).
    otherwise({
     templateUrl: 'views/404.html',
