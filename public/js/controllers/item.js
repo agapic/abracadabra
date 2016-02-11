@@ -1,4 +1,4 @@
-app.controller('ItemController', function($scope, $http, $location, $routeParams, Item, spinnerService) {
+app.controller('ItemController', function($scope, $http, $location, $routeParams, Item) {
 	$scope.itemImages = [];
 
 	$scope.init = function (){
@@ -28,10 +28,7 @@ app.controller('ItemController', function($scope, $http, $location, $routeParams
  //        });
 	// };
 
-	$scope.getItems = function() {
-		$scope.items = data;
-		console.log(data);
-	}
+
 
 });
 

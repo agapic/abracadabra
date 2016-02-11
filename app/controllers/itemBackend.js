@@ -38,12 +38,12 @@ exports.getItem = function(req, res) {
 				        , count(p.item3 = ? OR NULL)::int2 AS it3\
 				        , count(p.item4 = ? OR NULL)::int2 AS it4\
 				        , count(p.item5 = ? OR NULL)::int2 AS it5\
+				        , mv.matchversion\
 				   FROM   matchversion   mv\
 				   CROSS  JOIN matchtype mt\
 				   JOIN   match          m  USING (matchtype_id, matchversion_id)\
 				   JOIN   participant    p  USING (match_id)\
-				   WHERE  mv.matchversion = \'5.14\'\
-				   AND    mt.matchtype = \'RANKED_SOLO_5x5\'\
+				   WHERE    mt.matchtype = \'RANKED_SOLO_5x5\'\
 				   AND    p.winner = True\
 				   GROUP  BY p.champion_id\
 				   HAVING count(p.item0 = ? OR NULL)::int2 > 0\
@@ -56,7 +56,7 @@ exports.getItem = function(req, res) {
 				JOIN  champion c USING (champion_id)";
 	var bindings = [itemId, itemId, itemId, itemId, itemId, itemId, itemId,
 					itemId,itemId,itemId,itemId,itemId ]
-	return pg.raw(query, bindings).then(function(response){
+	return pg.raw('select * from champion').then(function(response){
 		res.jsonp(response.rows);
 		Promise.resolve();
 	}).catch(function (err){

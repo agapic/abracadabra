@@ -24,3 +24,22 @@ FROM  (
    OR count(p.item5 = 3285 OR NULL)::int2 > 0
    ) p
 JOIN  champion c USING (champion_id);
+
+
+--Finding items--
+select c.name 
+     , count(p.item0 = 3285 OR NULL)::int2 AS it0
+     , count(p.item1 = 3285 OR NULL)::int2 AS it1 
+     , count(p.item2 = 3285 OR NULL)::int2 AS it2 
+     , count(p.item3 = 3285 OR NULL)::int2 AS it3 
+     , count(p.item4 = 3285 OR NULL)::int2 AS it4 
+     , count(p.item5 = 3285 OR NULL)::int2 AS it5 
+     from participant p
+JOIN champion c using (champion_id)
+GROUP BY c.name, p.champion_id
+HAVING count(p.item0 = 3285 OR NULL)::int2 > 2
+   OR count(p.item1 = 3285 OR NULL)::int2 > 10
+   OR count(p.item2 = 3285 OR NULL)::int2 > 10
+   OR count(p.item3 = 3285 OR NULL)::int2 > 10
+   OR count(p.item4 = 3285 OR NULL)::int2 > 10
+   OR count(p.item5 = 3285 OR NULL)::int2 > 10

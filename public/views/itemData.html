@@ -1,16 +1,83 @@
-	<div class = "page-content" data-ng-init="init()"> 
+<div style="position: absolute;  z-index: 10; margin-bottom: auto;">
+	<spinner name="itemSpinner1" img-src='/img/gear1.svg' ></spinner>
+</div>	
+<div style="position: relative; float:right; z-index: 10; margin: auto;">
+	<spinner name="itemSpinner2" img-src='/img/gear2.svg' ></spinner>
+</div>
+<div class = "page-content" data-ng-init="init()"> 
 	<div class="container">
+		<div class="dropdown">
+      		<div class="btn-group">
+          		<button class="dropdown-toggle button" type="button" data-toggle="dropdown">
+          			<span>Menu</span>
+          		</button>
+            	<ul class="dropdown-menu">
+                	<li class="dropdown-submenu">
+                  		<a tabindex="-1" href="#">Normal</a>
+	                  	<ul class="dropdown-menu">
+							<li><a tabindex="-1"  href="/champions/NORMAL/BR">Brazil</a></li>
+							<li><a tabindex="-1"  href="/champions/NORMAL/EUNE">Europe Northeast</a></li>
+							<li><a tabindex="-1"  href="/champions/NORMAL/EUW">Europe West</a></li>
+							<li><a tabindex="-1"  href="/champions/NORMAL/KR">Korea</a></li>
+							<li><a tabindex="-1"  href="/champions/NORMAL/LAN">Latin America North</a></li>
+							<li><a tabindex="-1"  href="/champions/NORMAL/LAS">Latin America South</a></li>
+							<li><a tabindex="-1"  href="/champions/NORMAL/NA">North America</a></li>
+							<li><a tabindex="-1"  href="/champions/NORMAL/OCE">Oceanic</a></li>
+							<li><a tabindex="-1"  href="/champions/NORMAL/RU">Russia</a></li>
+							<li><a tabindex="-1"  href="/champions/NORMAL/TR">Turkey</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a tabindex="-1" href="/champions/NORMAL/">Overall</a></li>
+	                    </ul>
+                	</li>
+                <div class="divider"></div>
+	                <li class="dropdown-submenu">
+	                    <a tabindex="-1" href="#">Ranked</a>
+	                    <ul class="dropdown-menu">
+							<li><a tabindex="-1"  href="/champions/RANKED/BR">Brazil</a></li>
+							<li><a tabindex="-1"  href="/champions/RANKED/EUNE">Europe Northeast</a></li>
+							<li><a tabindex="-1"  href="/champions/RANKED/EUW">Europe West</a></li>
+							<li><a tabindex="-1"  href="/champions/RANKED/KR">Korea</a></li>
+							<li><a tabindex="-1"  href="/champions/RANKED/LAN">Latin America North</a></li>
+							<li><a tabindex="-1"  href="/champions/RANKED/LAS">Latin America South</a></li>
+							<li><a tabindex="-1"  href="/champions/RANKED/NA">North America</a></li>
+							<li><a tabindex="-1"  href="/champions/RANKED/OCE">Oceanic</a></li>
+							<li><a tabindex="-1"  href="/champions/RANKED/RU">Russia</a></li>
+							<li><a tabindex="-1"  href="/champions/RANKED/TR">Turkey</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a tabindex="-1" href="/champions/RANKED">Overall</a></li>
+	                    </ul>
+	                </li>
+                <div class="divider"></div>
+                    <li><a href="/">Homepage</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
+	<div ng-if="items[0]" class="container item-image-container">
 		<div class="row">
-
-			<div class="col-md-12  item-grid" ng-repeat="champion in items">
-				
-					{{champion.name}}
-					 {{champion.champion_id}}
-					
-					
-				
-			</div>
+      		<table class="table-striped item-table">
+          		<thead>
+	              	<tr>
+	                  <th><b>Champion</b></th>
+	                  <th><b>Item Winrate (based on slot #)</b></th>
+	              	</tr>
+          		</thead>
+		        <tbody>
+	                <tr ng-repeat="champion in items">
+						<td> 
+							<div class="item-container">
+								<img class="champion-img" src ="img/champion/{{champion.name}}.png">
+							</div><br>
+							{{champion.name}}
+						</td>
+						<td> 
+							<canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series">
+							</canvas>
+						</td>
+	                </tr>
+		        </tbody>
+      		</table>
 		</div>
 	</div>
-	</div>
+</div>

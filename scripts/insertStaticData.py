@@ -30,6 +30,7 @@ def champions(cur):
     return
 
 def main():
+
     file = open("../config/connection.js")
     line = file.read()
     words = line.split()
