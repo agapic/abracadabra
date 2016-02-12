@@ -1,0 +1,30 @@
+SELECT c.name, *
+FROM  (
+   SELECT p.champion_id
+        , count(p.item0 = 3285 OR NULL)::int2 AS it0tot
+        , count(p.item0 = 3285 AND winner=True OR NULL)::int2 AS it0wins
+        , count(p.item1 = 3285 OR NULL)::int2 AS it1
+        , count(p.item1 = 3285 AND winner=True OR NULL)::int2 AS it1wins
+        , count(p.item2 = 3285 OR NULL)::int2 AS it2
+        , count(p.item2 = 3285 AND winner=True OR NULL)::int2 AS it2wins
+        , count(p.item3 = 3285 OR NULL)::int2 AS it3
+        , count(p.item3 = 3285 AND winner=True OR NULL)::int2 AS it3wins
+        , count(p.item4 = 3285 OR NULL)::int2 AS it4
+        , count(p.item4 = 3285 AND winner=True OR NULL)::int2 AS it4wins
+        , count(p.item5 = 3285 OR NULL)::int2 AS it5
+        , count(p.item5 = 3285 AND winner=True OR NULL)::int2 AS it5wins
+        , mv.matchversion
+   FROM   matchversion   mv  
+   CROSS  JOIN matchtype mt
+   JOIN   match          m  USING (matchtype_id, matchversion_id)
+   JOIN   participant    p  USING (match_id)
+   WHERE    mt.matchtype LIKE(?)
+   GROUP  BY p.champion_id, mv.matchversion
+   HAVING count(p.item0 = 3285 OR NULL)::int2 > 6
+   OR count(p.item1 = 3285 OR NULL)::int2 > 6
+   OR count(p.item2 = 3285 OR NULL)::int2 > 6
+   OR count(p.item3 = 3285 OR NULL)::int2 > 6
+   OR count(p.item4 = 3285 OR NULL)::int2 > 6
+   OR count(p.item5 = 3285 OR NULL)::int2 > 6
+   ) p
+JOIN  champion c USING (champion_id);

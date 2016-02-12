@@ -1,5 +1,5 @@
 window.app.factory("Item", function ($resource) {
-    return $resource('api/:action/:itemId',{},
+    return $resource('api/:action/:type/:region/:itemId',{},
         {
             get_item_files: {
                 method: 'GET',
@@ -14,6 +14,8 @@ window.app.factory("Item", function ($resource) {
                 isArray: true,
             	params: {
             		action: 'items',
+                    typeId: 'type',
+                    regionId: 'region',
             		itemId: 'itemId'
             	},
             }

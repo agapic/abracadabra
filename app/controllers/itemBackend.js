@@ -1,18 +1,18 @@
 var env = process.env.NODE_ENV || 'development';
 
 var config = require('../../config/config.js')[env];
-var knex = require('knex');
+// var knex = require('knex');
 var fs = require('fs');
-var filestr = require('../../config/connection.js');
-var connString = filestr.connection;
-	var pg = knex({
-  client: 'pg',
-  connection: connString,
-   pool: {
-    min: 0,
-    max: 7
-  }
-});
+// var filestr = require('../../config/connection.js');
+// var connString = filestr.connection;
+// 	var pg = knex({
+//   client: 'pg',
+//   connection: connString,
+//    pool: {
+//     min: 0,
+//     max: 7
+//   }
+// });
 
 
 
@@ -28,43 +28,52 @@ exports.getItemFiles = function(req, res) {
 // }
 
 exports.getItem = function(req, res) {
-	console.log("test");
+	var path = '../../data/query_results/';
 	var itemId = req.params.itemId;
-	var query = "SELECT c.name, * FROM  (\
-				   SELECT p.champion_id\
-				        , count(p.item0 = ? OR NULL)::int2 AS it0\
-				        , count(p.item1 = ? OR NULL)::int2 AS it1\
-				        , count(p.item2 = ? OR NULL)::int2 AS it2\
-				        , count(p.item3 = ? OR NULL)::int2 AS it3\
-				        , count(p.item4 = ? OR NULL)::int2 AS it4\
-				        , count(p.item5 = ? OR NULL)::int2 AS it5\
-				        , mv.matchversion\
-				   FROM   matchversion   mv\
-				   CROSS  JOIN matchtype mt\
-				   JOIN   match          m  USING (matchtype_id, matchversion_id)\
-				   JOIN   participant    p  USING (match_id)\
-				   WHERE    mt.matchtype = \'RANKED_SOLO_5x5\'\
-				   AND    p.winner = True\
-				   GROUP  BY p.champion_id\
-				   HAVING count(p.item0 = ? OR NULL)::int2 > 0\
-				   OR count(p.item1 = ? OR NULL)::int2 > 0\
-				   OR count(p.item2 = ? OR NULL)::int2 > 0\
-				   OR count(p.item3 = ? OR NULL)::int2 > 0\
-				   OR count(p.item4 = ? OR NULL)::int2 > 0\
-				   OR count(p.item5 = ? OR NULL)::int2 > 0\
-				   ) p\
-				JOIN  champion c USING (champion_id)";
-	var bindings = [itemId, itemId, itemId, itemId, itemId, itemId, itemId,
-					itemId,itemId,itemId,itemId,itemId ]
-	return pg.raw('select * from champion').then(function(response){
-		res.jsonp(response.rows);
-		Promise.resolve();
-	}).catch(function (err){
-		res.status(404).send(err);
-	});
+	var region = req.params.region || '';
+	var type = req.params.typeId;
+	return res.jsonp(fs.readFileSync(path + typeId + '_' + itemId + '_by_champion.json', 'utf8'));
+
+}
+
+// exports.getItem = function(req, res) {
+// 	console.log("test");
+// 	var itemId = req.params.itemId;
+// 	var query = "SELECT c.name, * FROM  (\
+// 				   SELECT p.champion_id\
+// 				        , count(p.item0 = ? OR NULL)::int2 AS it0\
+// 				        , count(p.item1 = ? OR NULL)::int2 AS it1\
+// 				        , count(p.item2 = ? OR NULL)::int2 AS it2\
+// 				        , count(p.item3 = ? OR NULL)::int2 AS it3\
+// 				        , count(p.item4 = ? OR NULL)::int2 AS it4\
+// 				        , count(p.item5 = ? OR NULL)::int2 AS it5\
+// 				        , mv.matchversion\
+// 				   FROM   matchversion   mv\
+// 				   CROSS  JOIN matchtype mt\
+// 				   JOIN   match          m  USING (matchtype_id, matchversion_id)\
+// 				   JOIN   participant    p  USING (match_id)\
+// 				   WHERE    mt.matchtype = \'RANKED_SOLO_5x5\'\
+// 				   AND    p.winner = True\
+// 				   GROUP  BY p.champion_id\
+// 				   HAVING count(p.item0 = ? OR NULL)::int2 > 0\
+// 				   OR count(p.item1 = ? OR NULL)::int2 > 0\
+// 				   OR count(p.item2 = ? OR NULL)::int2 > 0\
+// 				   OR count(p.item3 = ? OR NULL)::int2 > 0\
+// 				   OR count(p.item4 = ? OR NULL)::int2 > 0\
+// 				   OR count(p.item5 = ? OR NULL)::int2 > 0\
+// 				   ) p\
+// 				JOIN  champion c USING (champion_id)";
+// 	var bindings = [itemId, itemId, itemId, itemId, itemId, itemId, itemId,
+// 					itemId,itemId,itemId,itemId,itemId ]
+// 	return pg.raw('select * from champion').then(function(response){
+// 		res.jsonp(response.rows);
+// 		Promise.resolve();
+// 	}).catch(function (err){
+// 		res.status(404).send(err);
+// 	});
 
 
-};
+// };
 // 	.then(function(resp) {
 // 		// res.send(resp.rows);
 // 	}).catch(function(err){

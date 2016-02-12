@@ -5,7 +5,7 @@ module.exports = function (app) {
     var items = require('../app/controllers/itemBackend');
     //app.param('itemId', items.item);
     app.get('/api/items', items.getItemFiles);
-    app.get('/api/items/:itemId', items.getItem);
+    app.get('/api/items/:type/:region?/:itemId', items.getItem);
 
     app.get('*', function(req, res) {
         // Redirect to frontend if not requesting html template
