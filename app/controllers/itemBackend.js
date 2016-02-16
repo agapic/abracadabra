@@ -3,6 +3,7 @@ var env = process.env.NODE_ENV || 'development';
 var config = require('../../config/config.js')[env];
 // var knex = require('knex');
 var fs = require('fs');
+var _ = require('lodash');
 // var filestr = require('../../config/connection.js');
 // var connString = filestr.connection;
 // 	var pg = knex({
@@ -28,12 +29,27 @@ exports.getItemFiles = function(req, res) {
 // }
 
 exports.getItem = function(req, res) {
-	var path = '../../data/query_results/';
 	var itemId = req.params.itemId;
 	var region = req.params.region || '';
-	var type = req.params.typeId;
-	return res.jsonp(fs.readFileSync(path + typeId + '_' + itemId + '_by_champion.json', 'utf8'));
+	var type = req.params.type;
 
+	console.log(itemId, region, type);
+
+
+	var path511 =  region ? 'data/query_results/' + region + '/5-11/' : 'data/query_results/5-11/';
+	var file511 = fs.readFileSync(path511 + '5-11' + '_' + type + '_' + itemId + '.json', 'utf8');
+
+	var path514 =  region ? 'data/query_results/' + region + '/5-14/' : 'data/query_results/5-14/';
+	var file514 = fs.readFileSync(path514 + '5-14' + '_' + type + '_' + itemId + '.json', 'utf8');
+
+	_.merge(file511, file514);
+	console.log(file511);
+
+	var consolidate = {};
+	consolidate["5-11"] = JSON.parse(file511);
+	consolidate["5-14"] = JSON.parse(file514);
+
+	return res.send(consolidate);
 }
 
 // exports.getItem = function(req, res) {

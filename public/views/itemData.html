@@ -70,9 +70,11 @@
 								<img class="champion-img" src ="img/champion/{{champion.name}}.png">
 							</div><br>
 							{{champion.name}}
+							
+
 						</td>
 						<td> 
-							<canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series">
+							<canvas id="bar" class="chart chart-bar" chart-data="data[$index]" chart-labels="labels" chart-series="series">
 							</canvas>
 						</td>
 	                </tr>

@@ -23,7 +23,7 @@
 			<div class="col-md-2 col-xs-4 item-grid" ng-repeat="item in itemImages">
 
 				<div class="item-container">
-				<a href ="/#!/items/1001">
+				<a href ="/#!/items/ranked/{{item | split:'.':0}}">
 					<img class="item-image" ng-src="{{getImagePath(item)}}"/>
 					</a>	
 				</div>

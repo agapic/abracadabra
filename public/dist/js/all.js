@@ -11,7 +11,11 @@ app.config(["$routeProvider", function ($routeProvider) {
         controller: 'ItemController',
         templateUrl: 'views/items.html'
     }).
-    when('/items/:itemId', {
+    when('/items/:type/:itemId', {
+        controller: 'ItemDataController',
+        templateUrl: 'views/itemData.html',
+    }).
+    when('/items/:type/:region/:itemId', {
         controller: 'ItemDataController',
         templateUrl: 'views/itemData.html',
     }).
@@ -69,17 +73,45 @@ app.controller('ItemController', ["$scope", "$http", "$location", "$routeParams"
 
 
 app.controller('ItemDataController', ["$scope", "$http", "$location", "$routeParams", "Item", "spinnerService", function($scope, $http, $location, $routeParams, Item, spinnerService) {
+	$scope.items = [];
+	$scope.data = [] ;
 	$scope.spinnerService = spinnerService;
 	$scope.init = function (){
+		$index = -1;
 		spinnerService.show('itemSpinner1');
 		spinnerService.show('itemSpinner2');
 		var type = $routeParams.type;
 		var region = $routeParams.region;
 		var itemId =  $routeParams.itemId;
 
+		console.log(type, region, itemId);
+
 		Item.item_query({ type: type, region: region, itemId: itemId}, function(result) {
-        	$scope.items = result;
-        	console.log(result);;
+        	$scope.items = result["5-11"]
+        	
+        	console.log(result);
+        	
+
+
+
+
+        	var arr1 = [0];
+        	var arr2 = [0];
+        	var seen = [];
+        	for(var j = 0 ; j < result.length; j++) {
+        		if(seen.indexOf(result[j].name) !== -1) break;
+        		seen.push(result[j].name);
+        		var fetch = search(result[j].name, result);
+            	for(var i = 0; i < fetch.length; i++) {
+		    		if(fetch[i].matchversion === '5.11') {
+		    			arr1 = [fetch[i].it0wins];
+		    		}
+		    		if(fetch[i].matchversion === '5.14') {
+		    			arr2 = [fetch[i].it0wins];
+		    		} 
+    			}
+        		$scope.data[j] = [arr1, arr2];
+        	}
         }, function(err) {
         	console.log(Object.keys(err))
         });
@@ -88,10 +120,24 @@ app.controller('ItemDataController', ["$scope", "$http", "$location", "$routePar
     $scope.labels = ['1', '2', '3', '4', '5', '6'];
     $scope.series = ['Patch 5.11', 'Patch 5.14'];
 
-    $scope.data = [
-      [65, 59, 80, 81, 56, 55],
-      [28, 48, 40, 19, 86, 27]
-  	];
+	function search(nameKey, myArray){
+		var arr = [];
+	    for (var i=0; i < myArray.length; i++) {
+	        if (myArray[i].name === nameKey) {
+	        	arr.push(myArray[i]);         
+	        }
+	    }
+	    return arr;
+	}
+
+  	// $scope.setData = function (champion) {
+   //  	 var data = [  ];
+    	
+
+    	
+
+   //  	return data;
+  	// }
 	$scope.$watch("items", function(f) {
 		if(f) spinnerService.hideAll();
 	})
@@ -129,11 +175,11 @@ window.app.factory("Item", ["$resource", function ($resource) {
 
             item_query: {
             	method: 'GET',
-                isArray: true,
+                isArray: false,
             	params: {
             		action: 'items',
-                    typeId: 'type',
-                    regionId: 'region',
+                    type: 'type',
+                    region: 'region',
             		itemId: 'itemId'
             	},
             }

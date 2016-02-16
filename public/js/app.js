@@ -11,7 +11,11 @@ app.config(function ($routeProvider) {
         controller: 'ItemController',
         templateUrl: 'views/items.html'
     }).
-    when('/items/:itemId', {
+    when('/items/:type/:itemId', {
+        controller: 'ItemDataController',
+        templateUrl: 'views/itemData.html',
+    }).
+    when('/items/:type/:region/:itemId', {
         controller: 'ItemDataController',
         templateUrl: 'views/itemData.html',
     }).
