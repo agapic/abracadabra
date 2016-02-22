@@ -3,7 +3,6 @@ module.exports = function (app) {
     app.get('/', index.render);
     
     var items = require('../app/controllers/itemBackend');
-    //app.param('itemId', items.item);
     app.get('/api/items', items.getItemFiles);
     app.get('/api/items/:type/:region?/:itemId', items.getItem);
 
@@ -14,26 +13,4 @@ module.exports = function (app) {
         }
     });
 
-	// var teams = require('../app/controllers/teams');
-	// app.get('/api/teams/:all')
-	// app.get('/api/teams/:teamId', teams.show);
-
-	// var match = require('../app/controllers/matches');
-	// app.get('/api/matches/:matchId', matches.show);
-
-	// var champions = require('../app/controllers/champions');
-	// app.get('/api/champions/:championId', champions.show);
-
-	// var items = require('../app/controllers/items');
-	// app.param('itemId', items.item);
-	// app.param('matchType', items.matchType);
-	// app.param('region', items.region);
-
-	// app.get('/api/items', items.all);
-	// app.get('/api/items/:itemId', items.show);
-	// app.get('/api/items/:itemId/:matchType/:all')
-	// app.get('/api/items/:itemId/:matchType/:region', items.region);
-
-
-//Implement lazy loading
 }

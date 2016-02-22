@@ -1,79 +1,44 @@
 var env = process.env.NODE_ENV || 'development';
 
 var config = require('../../config/config.js')[env];
-// var knex = require('knex');
 var fs = require('fs');
 var _ = require('lodash');
-// var filestr = require('../../config/connection.js');
-// var connString = filestr.connection;
-// 	var pg = knex({
-//   client: 'pg',
-//   connection: connString,
-//    pool: {
-//     min: 0,
-//     max: 7
-//   }
-// });
-
-
 
 exports.getItemFiles = function(req, res) {
 	var files = fs.readdirSync(__dirname + '/../../public/img/item/');
 	return res.json(files);
 }
 
-// exports.item = function(req, res, next, id) {
-// 	console.log(req.itemId);
-// 	req.itemId = id;
-// 	next();
-// }
-
 exports.getItem = function(req, res) {
 	var itemId = req.params.itemId;
 	var region = req.params.region || '';
 	var type = req.params.type;
-
-	console.log(itemId, region, type);
-
 
 	var path511 =  region ? 'data/query_results/' + region + '/5-11/' : 'data/query_results/5-11/';
 	var file511 = JSON.parse(fs.readFileSync(path511 + '5-11' + '_' + type + '_' + itemId + '.json', 'utf8'));
 
 	var path514 =  region ? 'data/query_results/' + region + '/5-14/' : 'data/query_results/5-14/';
 	var file514 = JSON.parse(fs.readFileSync(path514 + '5-14' + '_' + type + '_' + itemId + '.json', 'utf8'));
-	//console.log(file514);
-	//_.merge(file511, file514);
-	//console.log("file511" + JSON.stringify(file511, null, 4));
-	//console.log("file514" + JSON.stringify(file514, null, 4));
 
-	//_.omit(file511, 'matchversion')
-
-		_.each(file511, function (champion, key) {
-			if(_.filter(file514, _.matches({ 'name': champion.name })).length == 0) {
-				file511 = _.without(file511, _.find(file511, {'name': champion.name}));
-			}
-		})
-		_.each(file514, function (champion, key) {
-			if(_.filter(file511, _.matches({ 'name': champion.name })).length == 0) {
-				file514 = _.without(file514, _.find(file514, {'name': champion.name}));
-			}
-		})
-		_.merge(file511, file514);
-		// _.each(file514, function(champion) {
-		// 	if(!(_.filter(file511, _.matches({ 'name': champion.name })))) {
-		// 		_.pullAll(file514, champion);
-		// 	}
-		// })
-
-	//console.log(file511);
-	//console.log(file514);
-	// console.log(_.defaults(file511, file514));
-	//console.log(file511);
-	//consolidate["5-11"] = file511;
-	//consolidate["5-14"] = file514;
+	// Remove any champions that are unique to individual files, as any individual champion
+	// is required to be in both files for purposes of comparison
+	_.each(file511, function (champion, key) {
+		if (_.filter(file514, _.matches({ 'name': champion.name })).length == 0) {
+			file511 = _.without(file511, _.find(file511, {'name': champion.name}));
+		}
+	})
+	_.each(file514, function (champion, key) {
+		if (_.filter(file511, _.matches({ 'name': champion.name })).length == 0) {
+			file514 = _.without(file514, _.find(file514, {'name': champion.name}));
+		}
+	})
+	
+	_.merge(file511, file514);
 
 	return res.send(file511);
 }
+
+/* Keep this here for now, as if queries will be done in the future, this is how they will be done. */
 
 // exports.getItem = function(req, res) {
 // 	console.log("test");
@@ -119,4 +84,3 @@ exports.getItem = function(req, res) {
 // 		console.log(err);
 // 	});
 // }
-// exports.show = function(req, res) {

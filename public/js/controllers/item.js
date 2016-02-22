@@ -1,67 +1,47 @@
 app.controller('ItemController', function($scope, $http, $location, $routeParams, Item) {
 	$scope.itemImages = [];
+	
+	function compare(a,b) {
+	  	if (a.name < b.name)
+	    	return -1;
+	  	else if (a.name > b.name)
+	    	return 1;
+	  	else 
+	    	return 0;
+	}
 
 	$scope.init = function (){
-			Item.get_item_files({}, function(result) {
-				console.log(result);
-               $http.get('js/items.json').success(function(data) {
-					var arr = [];
-		   			var obj = data["data"];
-					for (a in obj) {
-						var s = a.toString() + ".png"
-					   	if(result.indexOf(s) > -1)
-					   	arr.push(obj[a])
-					}
-					console.log(arr);
-					arr.sort(compare);
-					var newObj = [];
-					arr.forEach(function(item){
-						newObj.push({id: item.id + '.png', name: item.name});
-					})
-					//console.log(newObj);
-					$scope.itemImages = newObj;
-					});
-		function compare(a,b) {
-		  if (a.name < b.name)
-		    return -1;
-		  else if (a.name > b.name)
-		    return 1;
-		  else 
-		    return 0;
-		}
-		//$scope.itemImages = result;
-               
-                
+		Item.get_item_files({}, function (result) {
+            $http.get('js/items.json').success(function (data) {
+				var arr = [];
+		   		var items = data['data'];
+				
+				// Create a new array for the item images that are currently used locally
+				for (item in items) {
+					var itemFile = item.toString() + ".png"
+				   	if (result.indexOf(itemFile) > -1) arr.push(items[item]);
+				}
 
-            }, function(err) {
-            	console.log("err" + err);
-            });
+				arr.sort(compare);
 
+				// Create an array of objects with the itemID and item name.
+				// Might be able to merge this was the previous for loop. 
+				var newArr = [];
 
+				arr.forEach(function (item) {
+					newArr.push({id: item.id + '.png', name: item.name});
+				})
+				
+				$scope.itemImages = newArr;
+			});               
+        }, function (err) {
+             console.log("err" + err);
+        });
 	};
-
-
 
 	$scope.getImagePath = function(itemName) {
         return  '/img/item/' + itemName;
 	};
-
-	// $scope.getItem = function(item) {
-	// 	$scope.spinnerService = spinnerService;
-	// 	spinnerService.show('itemSpinner1');
-	// 	spinnerService.show('itemSpinner2');
-	// 	var itemId =  (item.split('.')[1] === 'png') ? item.slice(0,-4) : item;
-	// 	Item.item_query({ itemId: itemId}, function(result) {
-	// 		//console.log(result);
- //        	$scope.itemList = result;
- //        	//console.log($scope.itemList);
- //        	//$location.url("/items/"+itemId);
- //        }, function(err) {
- //        	console.log(Object.keys(err))
- //        });
-	// };
-
-
 
 });
 
