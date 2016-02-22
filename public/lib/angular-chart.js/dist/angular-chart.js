@@ -16,7 +16,7 @@
   'use strict';
 
   Chart.defaults.global.responsive = false;
-  Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
+  Chart.defaults.global.multiTooltipTemplate = '<% if (typeof(value) === \'string\')%><%=datasetLabel%>: <%= value + \' %\' %><% if(typeof(value) === \'number\') %><%=datasetLabel%>: <%= value %>';
 
   Chart.defaults.global.colours = [
     '#97BBCD', // blue

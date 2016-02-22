@@ -37,19 +37,42 @@ exports.getItem = function(req, res) {
 
 
 	var path511 =  region ? 'data/query_results/' + region + '/5-11/' : 'data/query_results/5-11/';
-	var file511 = fs.readFileSync(path511 + '5-11' + '_' + type + '_' + itemId + '.json', 'utf8');
+	var file511 = JSON.parse(fs.readFileSync(path511 + '5-11' + '_' + type + '_' + itemId + '.json', 'utf8'));
 
 	var path514 =  region ? 'data/query_results/' + region + '/5-14/' : 'data/query_results/5-14/';
-	var file514 = fs.readFileSync(path514 + '5-14' + '_' + type + '_' + itemId + '.json', 'utf8');
+	var file514 = JSON.parse(fs.readFileSync(path514 + '5-14' + '_' + type + '_' + itemId + '.json', 'utf8'));
+	//console.log(file514);
+	//_.merge(file511, file514);
+	//console.log("file511" + JSON.stringify(file511, null, 4));
+	//console.log("file514" + JSON.stringify(file514, null, 4));
 
-	_.merge(file511, file514);
-	console.log(file511);
+	//_.omit(file511, 'matchversion')
 
-	var consolidate = {};
-	consolidate["5-11"] = JSON.parse(file511);
-	consolidate["5-14"] = JSON.parse(file514);
+		_.each(file511, function (champion, key) {
+			if(_.filter(file514, _.matches({ 'name': champion.name })).length == 0) {
+				file511 = _.without(file511, _.find(file511, {'name': champion.name}));
+			}
+		})
+		_.each(file514, function (champion, key) {
+			if(_.filter(file511, _.matches({ 'name': champion.name })).length == 0) {
+				file514 = _.without(file514, _.find(file514, {'name': champion.name}));
+			}
+		})
+		_.merge(file511, file514);
+		// _.each(file514, function(champion) {
+		// 	if(!(_.filter(file511, _.matches({ 'name': champion.name })))) {
+		// 		_.pullAll(file514, champion);
+		// 	}
+		// })
 
-	return res.send(consolidate);
+	//console.log(file511);
+	//console.log(file514);
+	// console.log(_.defaults(file511, file514));
+	//console.log(file511);
+	//consolidate["5-11"] = file511;
+	//consolidate["5-14"] = file514;
+
+	return res.send(file511);
 }
 
 // exports.getItem = function(req, res) {

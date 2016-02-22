@@ -13,73 +13,130 @@
           		</button>
             	<ul class="dropdown-menu">
                 	<li class="dropdown-submenu">
-                  		<a tabindex="-1" href="#">Normal</a>
+                  		<a tabindex="-1" href="">Normal</a>
 	                  	<ul class="dropdown-menu">
-							<li><a tabindex="-1"  href="/champions/NORMAL/BR">Brazil</a></li>
-							<li><a tabindex="-1"  href="/champions/NORMAL/EUNE">Europe Northeast</a></li>
-							<li><a tabindex="-1"  href="/champions/NORMAL/EUW">Europe West</a></li>
-							<li><a tabindex="-1"  href="/champions/NORMAL/KR">Korea</a></li>
-							<li><a tabindex="-1"  href="/champions/NORMAL/LAN">Latin America North</a></li>
-							<li><a tabindex="-1"  href="/champions/NORMAL/LAS">Latin America South</a></li>
-							<li><a tabindex="-1"  href="/champions/NORMAL/NA">North America</a></li>
-							<li><a tabindex="-1"  href="/champions/NORMAL/OCE">Oceanic</a></li>
-							<li><a tabindex="-1"  href="/champions/NORMAL/RU">Russia</a></li>
-							<li><a tabindex="-1"  href="/champions/NORMAL/TR">Turkey</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('BR/')">Brazil</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('EUNE/')">Europe Northeast</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('EUW/')">Europe West</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('KR/')">Korea</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('LAN/')">Latin America North</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('LAS/')">Latin America South</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('NA/')">North America</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('OCE/')">Oceanic</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('RU/')">Russia</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getNormalPath('TR/')">Turkey</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a tabindex="-1" href="/champions/NORMAL/">Overall</a></li>
+							<li><a tabindex="-1" href="" ng-click="getNormalPath('')">Overall</a></li>
 	                    </ul>
                 	</li>
                 <div class="divider"></div>
 	                <li class="dropdown-submenu">
-	                    <a tabindex="-1" href="#">Ranked</a>
+	                    <a tabindex="-1" href="">Ranked</a>
 	                    <ul class="dropdown-menu">
-							<li><a tabindex="-1"  href="/champions/RANKED/BR">Brazil</a></li>
-							<li><a tabindex="-1"  href="/champions/RANKED/EUNE">Europe Northeast</a></li>
-							<li><a tabindex="-1"  href="/champions/RANKED/EUW">Europe West</a></li>
-							<li><a tabindex="-1"  href="/champions/RANKED/KR">Korea</a></li>
-							<li><a tabindex="-1"  href="/champions/RANKED/LAN">Latin America North</a></li>
-							<li><a tabindex="-1"  href="/champions/RANKED/LAS">Latin America South</a></li>
-							<li><a tabindex="-1"  href="/champions/RANKED/NA">North America</a></li>
-							<li><a tabindex="-1"  href="/champions/RANKED/OCE">Oceanic</a></li>
-							<li><a tabindex="-1"  href="/champions/RANKED/RU">Russia</a></li>
-							<li><a tabindex="-1"  href="/champions/RANKED/TR">Turkey</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('BR/')">Brazil</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('EUNE/')">Europe Northeast</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('EUW/')">Europe West</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('KR/')">Korea</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('LAN/')">Latin America North</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('LAS/')">Latin America South</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('NA/')">North America</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('OCE/')">Oceanic</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('RU/')">Russia</a></li>
+							<li><a tabindex="-1"  href="" ng-click="getRankedPath('TR/')">Turkey</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a tabindex="-1" href="/champions/RANKED">Overall</a></li>
+							<li><a tabindex="-1" href="" ng-click="getRankedPath('')">Overall</a></li>
 	                    </ul>
 	                </li>
                 <div class="divider"></div>
-                    <li><a href="/">Homepage</a></li>
+                    <li><a href="/#!/items">Items Home</a></li>
                 </ul>
             </div>
         </div>
     </div>
+<div class = "item-description">
+<p>{{itemName}} <i class="entypo icon-right-open"></i> {{type}} <i ng-if="region.length>0" class="entypo icon-right-open"></i> {{region}}</p>
+<p>Comparing versions {{mv[0]}} and {{mv[1]}}</p>
+</div>
 
-	<div ng-if="items[0]" class="container item-image-container">
+
+
+	<div  class="container item-image-container" style="width: 100%">
+
+
 		<div class="row">
       		<table class="table-striped item-table">
           		<thead>
 	              	<tr>
-	                  <th><b>Champion</b></th>
-	                  <th><b>Item Winrate (based on slot #)</b></th>
+	                  <th><b>Champion</b>
+          		<span style=" float: right;">
+          		<select ng-model="sortDropdown">
+							<option value='' disabled selected>Sort by...</option>
+							<option value = 'winRateDifferenceAfterBefore'>Winrate Difference</option>
+							<option value = 'winDifferenceAfterBefore'>Total Win Difference</option>
+							<option value = 'totalWins{{mv[0]}}'>{{mv[0]}} Total Wins</option>
+							<option value = 'totalWins{{mv[1]}}'>{{mv[1]}} Total Wins</option>
+				</select>
+</span>
+	                  </th>
+	               
+	                  <th> Item 0 </th>
+	                  <th> Item 1 </th>
+	                  <th> Item 2 </th>
+	                  <th> Item 3 </th>
+	                  <th> Item 4 </th>
+	                  <th> Item 5 </th>
+
 	              	</tr>
           		</thead>
 		        <tbody>
-	                <tr ng-repeat="champion in items">
+
+
+
+
+<!-- 	<section>
+ <div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
+     <div ng-repeat='item in items'> {{item}}
+   </div>
+</section> -->
+	                <tr  ng-repeat="champion in items | orderBy:sortFunction | reverse" ng-init="getData(champion)">
 						<td> 
 							<div class="item-container">
 								<img class="champion-img" src ="img/champion/{{champion.name}}.png">
 							</div><br>
 							{{champion.name}}
-							
 
 						</td>
-						<td> 
-							<canvas id="bar" class="chart chart-bar" chart-data="data[$index]" chart-labels="labels" chart-series="series">
+					
+						<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it0[0] == 0 && champion.it0[1] == 0"> No data to show. </div>
+						<canvas style="width: 10em;" id="pie" class="chart chart-pie" chart-data="champion.it0" chart-labels="pielabel" chart-legend="true">
 							</canvas>
+							</td>
+							
+							
+						<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it1[0] == 0 && champion.it1[1] == 0"> No data to show. </div>
+							<canvas style="width: 10em;"id="pie" class="chart chart-pie" chart-data="champion.it1" chart-labels="pielabel" chart-legend="true">
+							</canvas>
+							</td>
+							<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it2[0] == 0 && champion.it2[1] == 0"> No data to show. </div>
+							<canvas style="width: 10em;"  id="pie" class="chart chart-pie" chart-data="champion.it2" chart-labels="pielabel" chart-legend="true">
+							</canvas>
+							</td>
+							<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it3[0] == 0 && champion.it3[1] == 0"> No data to show. </div>
+							<canvas style="width: 10em;" id="pie" class="chart chart-pie" chart-data="champion.it3" chart-labels="pielabel" chart-legend="true">
+							</canvas>
+							</td>
+							<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it4[0] == 0 && champion.it4[1] == 0"> No data to show. </div>
+							<canvas style="width: 10em;" id="pie" class="chart chart-pie" chart-data="champion.it4" chart-labels="pielabel" chart-legend="true">
+							</canvas></td>
+							<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it5[0] == 0 && champion.it5[1] == 0"> No data to show. </div>
+							<canvas style="width: 10em;" id="pie" class="chart chart-pie" chart-data="champion.it5" chart-labels="pielabel" chart-legend="true">
+							</canvas>
+							</td>
 						</td>
 	                </tr>
 		        </tbody>
       		</table>
 		</div>
 	</div>
+
 </div>

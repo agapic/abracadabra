@@ -23,13 +23,15 @@
 			<div class="col-md-2 col-xs-4 item-grid" ng-repeat="item in itemImages">
 
 				<div class="item-container">
-				<a href ="/#!/items/ranked/{{item | split:'.':0}}">
-					<img class="item-image" ng-src="{{getImagePath(item)}}"/>
+				<a href ="/#!/items/ranked/{{item.id | split:'.':0}}">	
+					<img class="item-image" ng-src="/img/item/{{item.id}}"/>
 					</a>	
+
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 

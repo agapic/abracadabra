@@ -11,11 +11,11 @@ window.app.factory("Item", function ($resource) {
 
             item_query: {
             	method: 'GET',
-                isArray: false,
+                isArray: true,
             	params: {
             		action: 'items',
-                    type: 'type',
-                    region: 'region',
+                    typeId: 'type',
+                    regionId: 'region',
             		itemId: 'itemId'
             	},
             }

@@ -97,7 +97,7 @@
 			scaleBeginAtZero: false,
 
 			// String - Scale label font declaration for the scale label
-			scaleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+			scaleFontFamily: "'MuseoSans', 'Helvetica', 'Arial', sans-serif",
 
 			// Number - Scale label font size in pixels
 			scaleFontSize: 12,
@@ -127,10 +127,10 @@
 			tooltipFillColor: "rgba(0,0,0,0.8)",
 
 			// String - Tooltip label font declaration for the scale label
-			tooltipFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+			tooltipFontFamily: "'MuseoSansSmall', 'Helvetica', 'Arial', sans-serif",
 
 			// Number - Tooltip label font size in pixels
-			tooltipFontSize: 14,
+			tooltipFontSize: 12,
 
 			// String - Tooltip font weight style
 			tooltipFontStyle: "normal",
@@ -139,7 +139,7 @@
 			tooltipFontColor: "#fff",
 
 			// String - Tooltip title font declaration for the scale label
-			tooltipTitleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+			tooltipTitleFontFamily: "'MuseoSans', 'Helvetica', 'Arial', sans-serif",
 
 			// Number - Tooltip title font size in pixels
 			tooltipTitleFontSize: 14,
@@ -169,7 +169,7 @@
 			tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
 
 			// String - Template string for single tooltips
-			multiTooltipTemplate: "<%= value %>",
+			multiTooltipTemplate: "<%= value + '%' %>",
 
 			// String - Colour behind the legend colour block
 			multiTooltipKeyBackground: '#fff',
