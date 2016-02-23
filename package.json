@@ -21,6 +21,7 @@
     "grunt-shell-spawn": "latest",
     "jade": "latest",
     "knex": "^0.9.0",
+    "lodash": "latest",
     "pg": "^4.4.1",
     "pm2": "~0.15.x",
     "request": "^2.0.0"
