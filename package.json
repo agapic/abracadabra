@@ -8,11 +8,11 @@
     "email": "andrewjdg@gmail.com"
   },
   "scripts": {
-    "start": "NODE_ENV=development ./node_modules/.bin/nodemon server.js"
+    "start": "NODE_ENV=development ./server.js"
   },
   "dependencies": {
     "async": "1.4.2",
-    "express": "^4.0.0",
+    "express": "latest",
     "grunt": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-ng-annotate": "latest",
@@ -37,7 +37,7 @@
     "livereloadx": "latest"
   },
   "engines": {
-    "node": "0.12.x"
+    "node": "0.11.x"
   },
   "repository": {
     "type": "git",
