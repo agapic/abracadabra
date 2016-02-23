@@ -1,9 +1,3 @@
-<div style="position: absolute;  z-index: 10; margin-bottom: auto;">
-	<spinner name="itemSpinner1" img-src='/img/gear1.svg' ></spinner>
-</div>	
-<div style="position: relative; float:right; z-index: 10; margin: auto;">
-	<spinner name="itemSpinner2" img-src='/img/gear2.svg' ></spinner>
-</div>
 <div class = "page-content" data-ng-init="init()"> 
 	<div class="container">
 		<div class="dropdown">
@@ -29,7 +23,7 @@
 							<li><a tabindex="-1" href="" ng-click="getNormalPath('')">Overall</a></li>
 	                    </ul>
                 	</li>
-                <div class="divider"></div>
+                	<div class="divider"></div>
 	                <li class="dropdown-submenu">
 	                    <a tabindex="-1" href="">Ranked</a>
 	                    <ul class="dropdown-menu">
@@ -47,96 +41,74 @@
 							<li><a tabindex="-1" href="" ng-click="getRankedPath('')">Overall</a></li>
 	                    </ul>
 	                </li>
-                <div class="divider"></div>
+                	<div class="divider"></div>
                     <li><a href="/#!/items">Items Home</a></li>
                 </ul>
             </div>
         </div>
     </div>
-<div class = "item-description">
-<p>{{itemName}} <i class="entypo icon-right-open"></i> {{type}} <i ng-if="region.length>0" class="entypo icon-right-open"></i> {{region}}</p>
-<p>Comparing versions {{mv[0]}} and {{mv[1]}}</p>
-</div>
-
-
-
+	<div class="item-description">
+		<p>{{itemName}} <i class="entypo icon-right-open"></i> {{type}} <i ng-if="region.length>0" class="entypo icon-right-open"></i> {{region}}</p>
+		<p>Comparing versions {{mv[0]}} and {{mv[1]}}</p>
+	</div>
 	<div  class="container item-image-container" style="width: 100%">
-
-
 		<div class="row">
       		<table class="table-striped item-table">
           		<thead>
 	              	<tr>
-	                  <th><b>Champion</b>
-          		<span style=" float: right;">
-          		<select ng-model="sortDropdown">
-							<option value='' disabled selected>Sort by...</option>
-							<option value = 'winRateDifferenceAfterBefore'>Winrate Difference</option>
-							<option value = 'winDifferenceAfterBefore'>Total Win Difference</option>
-							<option value = 'totalWins{{mv[0]}}'>{{mv[0]}} Total Wins</option>
-							<option value = 'totalWins{{mv[1]}}'>{{mv[1]}} Total Wins</option>
-				</select>
-</span>
-	                  </th>
-	               
-	                  <th> Item 0 </th>
-	                  <th> Item 1 </th>
-	                  <th> Item 2 </th>
-	                  <th> Item 3 </th>
-	                  <th> Item 4 </th>
-	                  <th> Item 5 </th>
-
+	                  	<th><b>Champion</b>			
+          					<select ng-model="sortDropdown">
+								<option value='' disabled selected>Sort by...</option>
+								<option value = 'winRateDifferenceAfterBefore'>Winrate Difference</option>
+								<option value = 'winDifferenceAfterBefore'>Total Win Difference</option>
+								<option value = 'totalWins{{mv[0]}}'>{{mv[0]}} Total Wins</option>
+								<option value = 'totalWins{{mv[1]}}'>{{mv[1]}} Total Wins</option>
+							</select>
+	                    </th>
+	                    <th> Item 1 </th>
+	                    <th> Item 2 </th>
+	                    <th> Item 3 </th>
+	                    <th> Item 4 </th>
+	                    <th> Item 5 </th>
+	                    <th> Item 6 </th>
 	              	</tr>
           		</thead>
 		        <tbody>
-
-
-
-
-<!-- 	<section>
- <div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
-     <div ng-repeat='item in items'> {{item}}
-   </div>
-</section> -->
-	                <tr  ng-repeat="champion in items | orderBy:sortFunction | reverse" ng-init="getData(champion)">
+	                <tr ng-repeat="champion in items | orderBy:sortFunction | reverse" ng-init="getData(champion)">
 						<td> 
 							<div class="item-container">
 								<img class="champion-img" src ="img/champion/{{champion.name}}.png">
-							</div><br>
+							</div>
+							<br>
 							{{champion.name}}
-
 						</td>
-					
-						<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it0[0] == 0 && champion.it0[1] == 0"> No data to show. </div>
-						<canvas style="width: 10em;" id="pie" class="chart chart-pie" chart-data="champion.it0" chart-labels="pielabel" chart-legend="true">
-							</canvas>
-							</td>
-							
-							
-						<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it1[0] == 0 && champion.it1[1] == 0"> No data to show. </div>
-							<canvas style="width: 10em;"id="pie" class="chart chart-pie" chart-data="champion.it1" chart-labels="pielabel" chart-legend="true">
-							</canvas>
-							</td>
-							<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it2[0] == 0 && champion.it2[1] == 0"> No data to show. </div>
-							<canvas style="width: 10em;"  id="pie" class="chart chart-pie" chart-data="champion.it2" chart-labels="pielabel" chart-legend="true">
-							</canvas>
-							</td>
-							<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it3[0] == 0 && champion.it3[1] == 0"> No data to show. </div>
-							<canvas style="width: 10em;" id="pie" class="chart chart-pie" chart-data="champion.it3" chart-labels="pielabel" chart-legend="true">
-							</canvas>
-							</td>
-							<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it4[0] == 0 && champion.it4[1] == 0"> No data to show. </div>
-							<canvas style="width: 10em;" id="pie" class="chart chart-pie" chart-data="champion.it4" chart-labels="pielabel" chart-legend="true">
-							</canvas></td>
-							<td><div style="font-family: MuseoSansSmall; font-weight: bold;" ng-if="champion.it5[0] == 0 && champion.it5[1] == 0"> No data to show. </div>
-							<canvas style="width: 10em;" id="pie" class="chart chart-pie" chart-data="champion.it5" chart-labels="pielabel" chart-legend="true">
-							</canvas>
-							</td>
+						<td>
+							<div class="chart" ng-if="champion.it0[0] == 0 && champion.it0[1] == 0"> No data to show. </div>
+							<canvas id="pie" class="chart chart-pie chart-width" chart-data="champion.it0" chart-labels="pielabel" chart-legend="true"></canvas>
+						</td>	
+						<td>
+							<div class="chart" ng-if="champion.it1[0] == 0 && champion.it1[1] == 0"> No data to show. </div>
+							<canvas id="pie" class="chart chart-pie chart-width" chart-data="champion.it1" chart-labels="pielabel" chart-legend="true"></canvas>
+						</td>
+						<td>
+							<div class="chart" ng-if="champion.it2[0] == 0 && champion.it2[1] == 0"> No data to show. </div>
+							<canvas id="pie" class="chart chart-pie chart-width" chart-data="champion.it2" chart-labels="pielabel" chart-legend="true"></canvas>
+						</td>
+						<td>
+							<div class="chart" ng-if="champion.it3[0] == 0 && champion.it3[1] == 0"> No data to show. </div>
+							<canvas id="pie" class="chart chart-pie chart-width" chart-data="champion.it3" chart-labels="pielabel" chart-legend="true"></canvas>
+						</td>
+						<td>
+							<div class="chart" ng-if="champion.it4[0] == 0 && champion.it4[1] == 0"> No data to show. </div>
+							<canvas id="pie" class="chart chart-pie chart-width" chart-data="champion.it4" chart-labels="pielabel" chart-legend="true"></canvas>
+						</td>
+						<td>
+							<div class="chart" ng-if="champion.it5[0] == 0 && champion.it5[1] == 0"> No data to show. </div>
+							<canvas id="pie" class="chart chart-pie chart-width" chart-data="champion.it5" chart-labels="pielabel" chart-legend="true"></canvas>
 						</td>
 	                </tr>
 		        </tbody>
       		</table>
 		</div>
 	</div>
-
 </div>

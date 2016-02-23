@@ -24,7 +24,6 @@ module.exports = function(grunt) {
                 'public/js/directives/*.js',
                 'public/js/services/*.js',
                 'public/js/filters/*.js'
-
             ]
         }
     }

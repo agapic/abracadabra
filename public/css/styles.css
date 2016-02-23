@@ -127,10 +127,20 @@
     display: inline-block;
     border-radius: 3px; 
   }
+
 .item-image {
   width: 48px;
   height: 48px;
   cursor: pointer;
+}
+
+.chart {
+  font-family: MuseoSansSmall;
+  font-weight: bold;
+}
+
+.chart-width {
+  width: 10em;
 }
 
 .item-image:hover {

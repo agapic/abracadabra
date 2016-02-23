@@ -1,5 +1,4 @@
 <div class = "page-content" data-ng-init="init()"> 
-
 	<header class="section-header container-fluid">
 	    <div class="row">				
 		    <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
@@ -12,21 +11,16 @@
 						<span class="glyphicon glyphicon-circle-arrow-left white"></span>  		Recall
 					</a>
 				</h4>
-
 		    </div>
 	    </div>
 	</header>			
 	<div class="container item-image-container">
-
 		<div class="row">
-
 			<div class="col-md-2 col-xs-4 item-grid" ng-repeat="item in itemImages">
-
 				<div class="item-container">
-				<a href ="/#!/items/ranked/{{item.id | split:'.':0}}">	
-					<img class="item-image" ng-src="/img/item/{{item.id}}"/>
+					<a href ="/#!/items/ranked/{{item.id | split:'.':0}}">	
+						<img class="item-image" ng-src="/img/item/{{item.id}}"/>
 					</a>	
-
 				</div>
 			</div>
 		</div>
