@@ -2,6 +2,7 @@ var env = process.env.NODE_ENV || 'development';
 
 var config = require('../../config/config.js')[env];
 var fs = require('fs');
+var _ = require('lodash');
 
 exports.getItemFiles = function(req, res) {
 	var files = fs.readdirSync(__dirname + '/../../public/img/item/');
