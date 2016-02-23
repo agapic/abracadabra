@@ -23,7 +23,11 @@ If you're interested in using Abracadabra for your own <i>personal</i> use, you'
 3. Run `insertStaticData.py`, `insertDatabase.py`, and `fetchData.py`. Static items such as champions and items will be inserted into the database followed by the 4 million match records. Finally, `fetchData.py` makes queries to the database and stores them into JSON files for easy access. The data is accessible in query_results. Be sure to change the paths in `insertDatabase.py` as well so that it points to `/data/original_data`. 
 
 In the event that I missed anything -- please don't hesitate to let me know.
- 
+
+## Website
+
+The charts were made with the lovely Chart.js and angular-chart.js addon. The background was provided by <a href="http://www.hotchkissdesign.ca/"> Daniel Hotchkiss</a>
+
 ## Database
 ![image] (http://agabra.herokuapp.com/img/db_relationships.png)
 
