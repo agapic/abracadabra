@@ -1,28 +1,65 @@
-#<a href = "http://abra.agapic.xyz">abracadabra</a>
+#Abracadabra
 
-Website displayed at http://abra.agapic.xyz
+Website displayed at http://agabra.herokuapp.com
 
-Abracadabra was originally made for Riot Games' API Challenge for the game League of Legends. However, due to the unfortunate circumstances that it was started late, the final version was unable to be released in time for the deadline. As such, it is more of an experiment of my own to learn Node.js, Postgres, and Handlebars.js. In addition, I dealt with the common headaches faced when working with async javascript (this was my first time using javascript essentially), and gained a deeper understanding as to how important it is to choose the right tool for the job. 
+Abracadabra was originally made for Riot Games' API Challenge for the game League of Legends in August 2015. It helps visualize the differences in win rates for items between two patches. On the homepage it states that it analyzes patch 5.11 and 5.14 only. This is true only for now. I have applied to get a production API key from Riot, and once approved, it will be for <i>every single upcoming patch</i>.
 
-With respect to the application itself, Abracadabra [a pun on magic damage] analyzes two major gameplay aspects for League of Legends: champion winrates for the sixteen relevant magic items that were changed in a major patch [5.11-5.14], and damage/winrate statistics for each champion. You can filter by region and by ranked/normal. One neat aspect of the application is that it visually displays WHEN the items were bought, thus bringing some form of temporal analysis into the picture. I found this important, as it provides an even deeper understanding of the effects.
+![image] (http://agabra.herokuapp.com/img/homepage.png)
 
-<h4>What is Abracadabra?</h4>
+# Implementation
 
-Simple. Abracadabra is a League of Legends application that analyzes gameplay changes over 2 major patches. It was made with <b>Node.js, Postgres, Python, Handlebars, Express, and Async. </b>  Specifically, it analyzes the ability power items (or <b>magic</b> items, hence abracadabra) that were changed between patches 5.11 and 5.14. The inspiration came from Riot Games' (which owns League of Legends) API challenge 2.0. I had only learned about the challenge just a few days before the deadline, so I wasn't able to get the final product ready by then. Despite this, I continued hacking away at it. 
-<br>
+The current working version was developed using the "PEAN" stack" (Postgres, Express, Angular, and Nodejs). I've transitioned into deploying it on Heroku now as Dokku was causing more headaches than necessary. 
 
-There were many headaches involved with the making of this app, mainly with the async nature of Javascript/Node. But, you live and learn. There were things that needed to be done synchronously in this application, and rather than having a pentillion callbacks, I decided to just hack a quick python script together, and voila. You learn how important it is to have the right tool for the right job at your exposure.
-<br>
+## Build it
 
-<h4>Features</h4>
-A quick rundown on the features:
+If you're interested in using Abracadabra for your own <i>personal</i> use, you're free to do so.
 
-<b>`items`</b> lets you select from the 16 major ability power items that were changed. You can filter by region or game type and it shows the data visually for champions in order of the largest difference in winrate. In addition, it shows <em>the winrate for each individual item slot on a given champion</em>.
+1. Run `npm install` to get the necessary nodejs modules.
+2. Add a file `connection.js` in `/config` with the template shown below. In addition, will need to configure Postgres locally. 
+   
+      `var connectionString = process.env.DATABASE_URL || 'postgres://postgres:<your password>@localhost:5432/<your-db-name>';`
+      
+      `exports.connection = connectionString;`
+3. Run `insertStaticData.py`, `insertDatabase.py`, and `fetchData.py`. Static items such as champions and items will be inserted into the database followed by the 4 million match records. Finally, `fetchData.py` makes queries to the database and stores them into JSON files for easy access. The data is accessible in query_results. Be sure to change the paths in `insertDatabase.py` as well so that it points to `/data/original_data`. 
 
-<b>`damage`</b> This page has an emphasis on magic damage difference over the patches, and winrate difference over the patches. Each column is sortable simply by clicking on the header.
+In the event that I missed anything -- please don't hesitate to let me know.
+ 
+## Database
+![image] (http://agabra.herokuapp.com/img/db_relationships.png)
 
-<h4>Future Improvements</h4>
+The database was made in Postgres and indices were created on the tables in order to optimize the queries. I find query optimization to be very important, especially when dealing with large amounts of data.
 
-Ideally, I would like to get this working for <em>every</em> item, rather than just ability power items. With that said, I think it would be really neat if I could roll this application out on every patch, since the process is quite easy to do since I've set up all the necessary overhead. I would just need to find a way to generate the necessary sample size for matches (unless Riot provides, of course)
+### Sample queries
+
+#### For item 3285, return a list of all the champions and each of their six item slots for all ranked matches in version 5.14.
+Additionally, scrap all champions that have 0 total wins over all slots.
+
+    SELECT c.name, *
+    FROM  (
+       SELECT p.champion_id
+            , count(p.item0 = 3285 OR NULL)::int2 AS it0
+            , count(p.item1 = 3285 OR NULL)::int2 AS it1
+            , count(p.item2 = 3285 OR NULL)::int2 AS it2
+            , count(p.item3 = 3285 OR NULL)::int2 AS it3
+            , count(p.item4 = 3285 OR NULL)::int2 AS it4
+            , count(p.item5 = 3285 OR NULL)::int2 AS it5
+       FROM   matchversion   mv  
+       CROSS  JOIN matchtype mt
+       JOIN   match          m  USING (matchtype_id, matchversion_id)
+       JOIN   participant    p  USING (match_id)
+       WHERE  mv.matchversion = '5.14'
+       AND    mt.matchtype = 'RANKED_SOLO_5x5'
+       AND    p.winner = True
+       GROUP  BY p.champion_id
+       HAVING count(p.item0 = 3285 OR NULL)::int2 > 0
+       OR count(p.item1 = 3285 OR NULL)::int2 > 0
+       OR count(p.item2 = 3285 OR NULL)::int2 > 0
+       OR count(p.item3 = 3285 OR NULL)::int2 > 0
+       OR count(p.item4 = 3285 OR NULL)::int2 > 0
+       OR count(p.item5 = 3285 OR NULL)::int2 > 0
+       ) p
+    JOIN  champion c USING (champion_id);
+
+
 
 
